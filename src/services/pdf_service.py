@@ -4,25 +4,21 @@ import re
 import streamlit as st
 import pandas as pd
 import pdfplumber
-from src.config.settings import CONTRATOS_MAPPING
+from src.config.settings import CONTRATOS_MAPPING, CLIENTES_CONFIG
 
 
 def agrupar_cliente(texto: str, fallback: str = None) -> str:
-    """Identifica e padroniza a instituição/cliente a partir de termos-chave e CNPJs."""
+    """Identifica e padroniza a instituição/cliente a partir de termos-chave e CNPJs configurados."""
     if not texto or pd.isna(texto):
         return fallback if fallback is not None else "OUTROS"
     
     r = str(texto).upper()
-    if 'UNIMED' in r or '87096616' in r: return 'UNIMED'
-    if 'CONCEICAO' in r or 'CONCEIÇÃO' in r: return 'CONCEICAO'
-    if 'UNIAO BRASILEIRA' in r or 'PUC' in r or '88630413' in r: return 'PUC'
-    if 'SANTA CASA' in r: return 'SANTA CASA'
-    if 'EBSERH' in r or 'SERVICOS HOSPITALARES' in r or '15126437' in r: return 'EBSERH'
-    if 'ASTROGILDO' in r or '95610887' in r: return 'HCAA'
-    if 'DIVINA' in r or '87317764' in r: return 'H DIVINA'
-    if 'PORTO ALEGRE' in r and ('PREF' in r or 'MUNICIPIO' in r or '92963560' in r): return 'SMS POA'
-    if 'CLINICAS' in r or '87020517' in r: return 'HCPA'
-    if 'GHC' in r or '450166419' in r: return 'GHC'
+    for cfg in CLIENTES_CONFIG:
+        if 'custom_match' in cfg and cfg['custom_match'](r):
+            return cfg['sigla']
+        for termo in cfg.get('termos', []):
+            if termo in r:
+                return cfg['sigla']
     
     return fallback if fallback is not None else r.strip()
 

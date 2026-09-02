@@ -157,7 +157,7 @@ streamlit run app.py --server.port 8501 --server.address 0.0.0.0
 ## ❓ 7. Troubleshooting e Perguntas Frequentes (FAQ)
 
 ### Q1: O que fazer se um novo contrato ou cliente for adicionado?
-**R:** Basta atualizar o dicionário `CONTRATOS_MAPPING` e a função `agrupar_cliente` no arquivo [`app.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/The-Nehemizer/app.py) incluindo o termo identificador e o número do contrato correspondente.
+**R:** Basta atualizar a configuração `CLIENTES_CONFIG` no arquivo [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/The-Nehemizer/src/config/settings.py) incluindo o termo identificador, CNPJ (se houver) e o número do contrato correspondente.
 
 ### Q2: Por que um produto foi parar na aba `NORMAL` em vez da aba do cliente?
 **R:** Isso ocorre quando o produto vendido não foi encontrado na tabela do PDF do contrato correspondente àquele cliente. O sistema aplica a *Regra Suprema* e destina o item para `NORMAL` para evitar precificação incorreta.

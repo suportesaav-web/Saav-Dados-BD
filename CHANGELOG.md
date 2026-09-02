@@ -4,6 +4,18 @@ Todas as alterações notáveis no projeto **The Nehemizer** serão documentadas
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.2.1] - 2026-09-02
+
+### 📚 Documentação & Governança
+- **Reestruturação do README em 4 Camadas:** Divisão limpa em Resumo Executivo, Como Funciona, Regras de Negócio e Documentação Técnica.
+- **Seção "Antes x Depois":** Comparativo de impacto de negócio no topo do README entre processo manual anterior e a solução automatizada.
+- **Documento Dedicado de Regras:** Criação do [`docs/regras-negocio.md`](docs/regras-negocio.md) contendo os de-paras detalhados de instituições e contratos, preservando o README limpo e desacoplado.
+
+### ⚙️ Engenharia & Refatoração
+- **Centralização de Clientes e Contratos:** Criação da estrutura `CLIENTES_CONFIG` em [`src/config/settings.py`](src/config/settings.py) e refatoração de `agrupar_cliente` em [`src/services/pdf_service.py`](src/services/pdf_service.py), eliminando termos e CNPJs *hardcoded* espalhados.
+
+---
+
 ## [1.2.0] - 2026-08-31
 
 ### 🎨 Identidade Visual & Design Corporativo Saavedra

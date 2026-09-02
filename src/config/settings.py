@@ -2,7 +2,7 @@
 
 APP_TITLE = "The Nehemizer - Portal Financeiro Saavedra"
 APP_SUBTITLE = "Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares."
-APP_VERSION = "1.2.0"
+APP_VERSION = "1.2.1"
 APP_ICON = "📊"
 
 # Paleta Corporativa Oficial Saavedra
@@ -14,18 +14,67 @@ BORDER_COLOR = "#E9ECEF"        # Borda sutil
 TEXT_MUTED = "#6C757D"          # Texto de apoio
 SECONDARY_COLOR = DARK_NEUTRAL
 
-# Mapeamento Oficial de Contratos BD
+# Configuração Centralizada de Clientes e Contratos BD
+CLIENTES_CONFIG = [
+    {
+        'sigla': 'UNIMED',
+        'contrato': '450128261',
+        'termos': ['UNIMED', '87096616']
+    },
+    {
+        'sigla': 'CONCEICAO',
+        'contrato': '450166419',
+        'termos': ['CONCEICAO', 'CONCEIÇÃO']
+    },
+    {
+        'sigla': 'PUC',
+        'contrato': '450155842',
+        'termos': ['UNIAO BRASILEIRA', 'PUC', '88630413']
+    },
+    {
+        'sigla': 'SANTA CASA',
+        'contrato': None,
+        'termos': ['SANTA CASA']
+    },
+    {
+        'sigla': 'EBSERH',
+        'contrato': '450098658',
+        'termos': ['EBSERH', 'SERVICOS HOSPITALARES', '15126437']
+    },
+    {
+        'sigla': 'HCAA',
+        'contrato': '450137626',
+        'termos': ['ASTROGILDO', '95610887']
+    },
+    {
+        'sigla': 'H DIVINA',
+        'contrato': '450146829',
+        'termos': ['DIVINA', '87317764']
+    },
+    {
+        'sigla': 'SMS POA',
+        'contrato': '450120243',
+        'termos': [],
+        'custom_match': lambda r: 'PORTO ALEGRE' in r and ('PREF' in r or 'MUNICIPIO' in r or '92963560' in r)
+    },
+    {
+        'sigla': 'HCPA',
+        'contrato': '450139832',
+        'termos': ['CLINICAS', '87020517']
+    },
+    {
+        'sigla': 'GHC',
+        'contrato': '450166419',
+        'termos': ['GHC', '450166419']
+    }
+]
+
+# Mapeamento Oficial de Contratos BD (derivado automaticamente para retrocompatibilidade)
 CONTRATOS_MAPPING = {
-    'UNIMED': '450128261',
-    'PUC': '450155842',
-    'H DIVINA': '450146829',
-    'HCPA': '450139832',
-    'SMS POA': '450120243',
-    'EBSERH': '450098658',
-    'HCAA': '450137626',
-    'GHC': '450166419',
-    'CONCEICAO': '450166419'
+    c['sigla']: c['contrato'] for c in CLIENTES_CONFIG if c.get('contrato')
 }
+CONTRATOS_MAPPING['GHC'] = '450166419'
+CONTRATOS_MAPPING['CONCEICAO'] = '450166419'
 
 # CSS Customizado Corporativo Refinado
 CUSTOM_CSS = f"""

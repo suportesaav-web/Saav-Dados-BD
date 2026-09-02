@@ -4,6 +4,22 @@ Todas as alterações notáveis no projeto **The Nehemizer** serão documentadas
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.3.0] - 2026-09-02
+
+### 💰 Inteligência Financeira & Gestão de Margem
+- **Cálculo de Margem Bruta e % Margem:** Incorporação de cálculo de margem e spread financeiro na Aba RESUMO do Excel e no painel executivo da aplicação.
+- **Linha de Fechamento Consolidada:** Adição de `TOTAL GERAL CONSOLIDADO` com destaque corporativo na planilha Excel gerada via `XlsxWriter`.
+- **Margem Dinâmica na Prévia:** A grade interativa agora calcula a margem bruta estimada em tempo real conforme o analista preenche ou ajusta preços de compra.
+
+### 🔄 Confiabilidade & Reatividade da Sessão
+- **Assinatura Combinada de Arquivos (`gerar_assinatura_arquivos`):** Detecção automática de alterações em qualquer arquivo (Vendas, PDFs de contratos ou Tabela Normal), permitindo reprocessamento instantâneo sem necessidade de recarregar a planilha de vendas.
+- **Invalidação Segura de Cache:** Limpeza proativa de downloads prévios ao trocar arquivos, prevenindo inconsistência documental.
+
+### 🧪 Qualidade de Código & Testes Automatizados
+- **Suíte de Testes Unitários (`tests/`):** 13 testes automatizados cobrindo identificação de clientes/CNPJs, normalização de colunas, Regra Suprema de Contingência e integridade da geração do Excel.
+
+---
+
 ## [1.2.1] - 2026-09-02
 
 ### 📚 Documentação & Governança

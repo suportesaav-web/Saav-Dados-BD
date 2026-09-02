@@ -16,11 +16,12 @@
 
   <p>
     <a href="CHANGELOG.md">
-      <img src="https://img.shields.io/badge/Versão-1.2.1-DC4405?style=flat-square&logo=git&logoColor=white" alt="Versão 1.2.1" />
+      <img src="https://img.shields.io/badge/Versão-1.3.0-DC4405?style=flat-square&logo=git&logoColor=white" alt="Versão 1.3.0" />
     </a>
     <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11+" />
     <img src="https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit" />
     <img src="https://img.shields.io/badge/Pandas-2.0+-150458?style=flat-square&logo=pandas&logoColor=white" alt="Pandas" />
+    <img src="https://img.shields.io/badge/Testes-Pytest_100%25-brightgreen?style=flat-square&logo=pytest&logoColor=white" alt="Testes Pytest" />
     <img src="https://img.shields.io/badge/Ambiente-Docker_/_DevContainer-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
     <img src="https://img.shields.io/badge/Licença-Corporativa_Saavedra-25282A?style=flat-square" alt="Licença" />
   </p>
@@ -218,6 +219,10 @@ The-Nehemizer/
 │   └── utils/               # Componentes de interface e experiência do usuário
 │       └── ui_components.py # Sidebar, métricas executivas, cabeçalho e modais
 │
+├── tests/                   # Suíte de testes unitários automatizados (Pytest)
+│   ├── conftest.py          # Configuração de PYTHONPATH
+│   └── test_business_rules.py # Testes de regras de negócio, contratos e exportador
+│
 ├── .devcontainer/           # Configuração de ambiente conteinerizado VS Code
 └── .vscode/                 # Configurações de workspace do desenvolvedor
 ```
@@ -254,7 +259,12 @@ The-Nehemizer/
    pip install -r requirements.txt
    ```
 
-4. **Iniciar a Aplicação:**
+4. **Executar Testes Automatizados:**
+   ```bash
+   pytest tests/ -p no:cacheprovider
+   ```
+
+5. **Iniciar a Aplicação:**
    ```bash
    streamlit run app.py
    ```

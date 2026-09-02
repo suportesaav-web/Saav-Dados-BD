@@ -110,26 +110,54 @@ def render_guia_inicial():
 
 
 def render_kpis_e_graficos(df: pd.DataFrame):
-    """Exibe painel executivo de KPIs e gráficos de distribuição de receita e contratos."""
+    """Exibe painel executivo de KPIs financeiros, cobertura de preços e gráficos de distribuição."""
     total_linhas = len(df)
-    total_bd = df['TEM_PRECO_BD'].sum()
+    total_bd = int(df['TEM_PRECO_BD'].sum())
     total_normal = total_linhas - total_bd
-    vlr_total_venda = df['VLRTOTAL'].sum()
+    vlr_total_venda = float(df['VLRTOTAL'].sum())
     
+    # Cálculos financeiros de custo e margem
+    custo_compra_series = df['QTDCOM'] * df['PRECO_COMPRA_FINAL'].fillna(0)
+    vlr_total_compra = float(custo_compra_series.sum())
+    margem_bruta = vlr_total_venda - vlr_total_compra
+    pct_margem = (margem_bruta / vlr_total_venda * 100) if vlr_total_venda > 0 else 0.0
+    
+    itens_sem_preco = int(df['PRECO_COMPRA_FINAL'].isna().sum())
+    itens_sem_ref = int((df['REFPROD'] == 'SEM_REF').sum())
+    
+    # 1ª Linha: Visão Financeira Executiva
     kpi1, kpi2, kpi3, kpi4 = st.columns(4)
     with kpi1:
-        st.metric("Total de Linhas", f"{total_linhas:,}")
+        st.metric("Total Faturado (Vendas)", f"R$ {vlr_total_venda:,.2f}")
     with kpi2:
-        pct_bd = (total_bd / total_linhas * 100) if total_linhas > 0 else 0
-        st.metric("Itens com Contrato BD", f"{total_bd:,}", delta=f"{pct_bd:.1f}%")
+        st.metric("Custo Estimado (Compras)", f"R$ {vlr_total_compra:,.2f}", help="Custo total com base nos contratos BD e tabela normal.")
     with kpi3:
-        pct_norm = (total_normal / total_linhas * 100) if total_linhas > 0 else 0
-        st.metric("Itens na Aba NORMAL", f"{total_normal:,}", delta=f"-{pct_norm:.1f}%", delta_color="inverse")
+        st.metric("Margem Bruta Estimada", f"R$ {margem_bruta:,.2f}", delta=f"{pct_margem:.1f}% Margem")
     with kpi4:
-        st.metric("Total Vendas", f"R$ {vlr_total_venda:,.2f}")
+        if itens_sem_preco > 0:
+            st.metric("Preços Pendentes", f"{itens_sem_preco:,}", delta="Revisar na prévia", delta_color="inverse")
+        else:
+            st.metric("Cobertura de Preços", "100%", delta="Auditoria OK")
+
+    # 2ª Linha: Visão Operacional e Distribuição de Contratos
+    col_op1, col_op2, col_op3 = st.columns(3)
+    with col_op1:
+        st.metric("Volume de Linhas", f"{total_linhas:,}")
+    with col_op2:
+        pct_bd = (total_bd / total_linhas * 100) if total_linhas > 0 else 0
+        st.metric("Itens com Contrato BD", f"{total_bd:,}", delta=f"{pct_bd:.1f}% faturado sob contrato")
+    with col_op3:
+        pct_norm = (total_normal / total_linhas * 100) if total_linhas > 0 else 0
+        st.metric("Itens na Aba NORMAL", f"{total_normal:,}", delta=f"-{pct_norm:.1f}% contingência", delta_color="inverse")
+
+    # Alertas Preventivos
+    if itens_sem_ref > 0:
+        st.warning(f"⚠️ Atenção: Há {itens_sem_ref} linha(s) sem código de referência (`REFPROD`). Verifique se a coluna correta foi identificada no relatório do ERP.")
+    elif itens_sem_preco > 0:
+        st.info(f"💡 Dica Financeira: Há {itens_sem_preco} item(ns) sem preço de compra definido. Você pode preenchê-los na prévia editável abaixo antes de exportar.")
 
     # Gráficos de Apoio com paleta oficial Saavedra
-    with st.expander("📊 Análise de Distribuição e Cobertura", expanded=False):
+    with st.expander("📊 Análise Gráfica de Distribuição & Margens", expanded=False):
         col_c1, col_c2 = st.columns(2)
         
         with col_c1:

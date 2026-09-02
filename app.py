@@ -24,11 +24,26 @@ st.set_page_config(
 render_header()
 render_sidebar_help()
 
+def gerar_assinatura_arquivos(vendas, pdfs, normal) -> str:
+    """Gera assinatura única considerando o estado de todos os arquivos carregados."""
+    partes = []
+    if vendas:
+        partes.append(f"vendas:{vendas.name}:{vendas.size}")
+    if pdfs:
+        for p in sorted(pdfs, key=lambda x: x.name):
+            partes.append(f"pdf:{p.name}:{p.size}")
+    if normal:
+        partes.append(f"normal:{normal.name}:{normal.size}")
+    return "|".join(partes)
+
+
 # --- SESSÃO & PERSISTÊNCIA ---
 if 'df_processado' not in st.session_state:
     st.session_state['df_processado'] = None
-if 'arquivo_vendas_id' not in st.session_state:
-    st.session_state['arquivo_vendas_id'] = None
+if 'arquivos_assinatura' not in st.session_state:
+    st.session_state['arquivos_assinatura'] = None
+if 'excel_export_bytes' not in st.session_state:
+    st.session_state['excel_export_bytes'] = None
 
 # --- UPLOAD DE ARQUIVOS ---
 col1, col2, col3 = st.columns(3)
@@ -42,14 +57,15 @@ with col3:
 # --- FLUXO PRINCIPAL ---
 if not arquivo_excel:
     st.session_state['df_processado'] = None
-    st.session_state['arquivo_vendas_id'] = None
+    st.session_state['arquivos_assinatura'] = None
+    st.session_state['excel_export_bytes'] = None
     render_guia_inicial()
 else:
-    # Identificador único de arquivo para invalidar cache de sessão se o usuário trocar o arquivo
-    arquivo_atual_id = f"{arquivo_excel.name}_{arquivo_excel.size}"
+    # Identificador único combinando todos os arquivos carregados para reatividade imediata
+    assinatura_atual = gerar_assinatura_arquivos(arquivo_excel, arquivos_pdf, arquivo_normal)
     
-    # Processa se for a primeira vez ou se trocou o arquivo
-    if st.session_state['df_processado'] is None or st.session_state['arquivo_vendas_id'] != arquivo_atual_id:
+    # Processa se for a primeira vez ou se qualquer arquivo foi alterado/adicionado
+    if st.session_state['df_processado'] is None or st.session_state['arquivos_assinatura'] != assinatura_atual:
         with st.spinner('The Nehemizer está processando e equalizando os dados...'):
             # 1. Leitura e normalização de vendas
             df_vendas_raw = ler_arquivo_tabela(arquivo_excel)
@@ -69,8 +85,9 @@ else:
             df_final = aplicar_regra_suprema(df_vendas, df_precos_pdf, df_normal)
             
             st.session_state['df_processado'] = df_final
-            st.session_state['arquivo_vendas_id'] = arquivo_atual_id
-            st.toast('Processamento e equalização concluídos com sucesso!', icon='✅')
+            st.session_state['arquivos_assinatura'] = assinatura_atual
+            st.session_state['excel_export_bytes'] = None  # Invalida exportação anterior
+            st.toast('Equalização de dados atualizada com sucesso!', icon='✅')
 
     df = st.session_state['df_processado']
 
@@ -90,7 +107,7 @@ else:
     with col_filtro:
         filtrar_pendentes = st.toggle("🔍 Apenas preços pendentes", value=False, help="Filtra a tabela para exibir apenas itens sem preço de compra preenchido.")
 
-    # Agrupamento para exibição na Aba Resumo
+    # Agrupamento para exibição na Aba Resumo com Margens em tempo real
     agg_dict = {
         'QTDCOM': 'sum',
         'VLRTOTAL': 'sum',
@@ -102,7 +119,14 @@ else:
     resumo_df = df.groupby(['ABA_DESTINO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO']).agg(agg_dict).reset_index()
     resumo_df['VLR UNIT VENDA'] = np.where(resumo_df['QTDCOM'] > 0, resumo_df['VLRTOTAL'] / resumo_df['QTDCOM'], 0)
     
-    cols_ui = ['CONTRATO_FINAL', 'SIGLA_RESUMO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'PRECO_COMPRA_FINAL']
+    custo_compra_calc = resumo_df['QTDCOM'] * resumo_df['PRECO_COMPRA_FINAL'].fillna(0)
+    resumo_df['MARGEM BRUTA'] = np.where(
+        resumo_df['PRECO_COMPRA_FINAL'].notna(),
+        resumo_df['VLRTOTAL'] - custo_compra_calc,
+        np.nan
+    )
+    
+    cols_ui = ['CONTRATO_FINAL', 'SIGLA_RESUMO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'PRECO_COMPRA_FINAL', 'MARGEM BRUTA']
     resumo_df_ui = resumo_df[cols_ui].copy()
     
     if filtrar_pendentes:
@@ -110,7 +134,7 @@ else:
         if resumo_df_ui.empty:
             st.success("Todos os itens possuem preço de compra definido.")
     
-    colunas_bloqueadas = ['CONTRATO_FINAL', 'SIGLA_RESUMO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL']
+    colunas_bloqueadas = ['CONTRATO_FINAL', 'SIGLA_RESUMO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'MARGEM BRUTA']
     
     resumo_df_editado = st.data_editor(
         resumo_df_ui, 
@@ -121,6 +145,7 @@ else:
             "VLR UNIT VENDA": st.column_config.NumberColumn(format="R$ %.2f"),
             "VLRTOTAL": st.column_config.NumberColumn(format="R$ %.2f"),
             "PRECO_COMPRA_FINAL": st.column_config.NumberColumn(format="R$ %.2f"),
+            "MARGEM BRUTA": st.column_config.NumberColumn(format="R$ %.2f"),
         },
         key="data_editor_precos"
     )

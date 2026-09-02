@@ -10,7 +10,7 @@
 | :--- | :--- |
 | **Nome do Sistema** | The Nehemizer — Portal Financeiro Saavedra |
 | **Código do Projeto** | `SAAV-NEHEMIZER` |
-| **Versão Atual** | `1.2.0` |
+| **Versão Atual** | `1.3.0` |
 | **Área Negocial** | Departamento Financeiro / Compras / Logística |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
 | **Status do Sistema** | 🟢 **Em Produção** |
@@ -19,7 +19,7 @@
 | **Unidade de Negócio** | Saavedra Suporte Web |
 | **E-mail de Suporte** | `suporte.saav@saavedra.com.br` |
 | **Perfil LinkedIn** | [linkedin.com/in/jonatanfsevero](https://www.linkedin.com/in/jonatanfsevero/) |
-| **Última Atualização** | 31/08/2026 |
+| **Última Atualização** | 02/09/2026 |
 
 ---
 

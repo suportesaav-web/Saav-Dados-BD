@@ -13,6 +13,7 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
         
         # Estilos Corporativos Saavedra
         formato_moeda = workbook.add_format({'num_format': 'R$ #,##0.00'})
+        formato_percentual = workbook.add_format({'num_format': '0.0%'})
         formato_cabecalho = workbook.add_format({
             'bold': True,
             'bg_color': PRIMARY_COLOR,
@@ -22,6 +23,12 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
         formato_subtotal = workbook.add_format({
             'bold': True,
             'bg_color': BG_CARD_COLOR,
+            'border': 1
+        })
+        formato_total_geral = workbook.add_format({
+            'bold': True,
+            'bg_color': SECONDARY_COLOR,
+            'font_color': 'white',
             'border': 1
         })
         formato_cabecalho_aba = workbook.add_format({
@@ -43,13 +50,19 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
         df_resumo_export = df_resumo_export.sort_values(by=['ABA_DESTINO', 'GRUPO_CLIENTE', 'REFPROD'])
         linhas_resumo = []
         
+        total_geral_venda = 0.0
+        total_geral_compra = 0.0
+
         for destino, group in df_resumo_export.groupby('ABA_DESTINO', sort=False):
-            subtotal_venda = 0
-            subtotal_compra = 0
+            subtotal_venda = 0.0
+            subtotal_compra = 0.0
             
             for _, row in group.iterrows():
                 vlr_unit_venda = row['VLRTOTAL'] / row['QTDCOM'] if row['QTDCOM'] > 0 else 0
-                vlr_total_compra = row['QTDCOM'] * (row['PRECO_COMPRA_FINAL'] if pd.notna(row['PRECO_COMPRA_FINAL']) else 0)
+                tem_compra = pd.notna(row['PRECO_COMPRA_FINAL'])
+                vlr_total_compra = row['QTDCOM'] * row['PRECO_COMPRA_FINAL'] if tem_compra else 0
+                margem_linha = (row['VLRTOTAL'] - vlr_total_compra) if tem_compra else None
+                pct_margem_linha = (margem_linha / row['VLRTOTAL']) if (margem_linha is not None and row['VLRTOTAL'] > 0) else None
                 
                 linhas_resumo.append([
                     row['CONTRATO_FINAL'], 
@@ -60,32 +73,51 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
                     row['QTDCOM'], 
                     vlr_unit_venda, 
                     row['VLRTOTAL'], 
-                    row['PRECO_COMPRA_FINAL'] if pd.notna(row['PRECO_COMPRA_FINAL']) else None, 
-                    vlr_total_compra if vlr_total_compra > 0 else None
+                    row['PRECO_COMPRA_FINAL'] if tem_compra else None, 
+                    vlr_total_compra if tem_compra else None,
+                    margem_linha,
+                    pct_margem_linha
                 ])
                 subtotal_venda += row['VLRTOTAL']
                 subtotal_compra += vlr_total_compra
             
+            subtotal_margem = subtotal_venda - subtotal_compra
+            subtotal_pct_margem = (subtotal_margem / subtotal_venda) if subtotal_venda > 0 else 0
+            
             linhas_resumo.append([
-                '', '', f'TOTAL ACUMULADO {destino}', '', '', '', '', subtotal_venda, '', subtotal_compra if subtotal_compra > 0 else None
+                '', '', f'TOTAL ACUMULADO {destino}', '', '', '', '', subtotal_venda, '', subtotal_compra if subtotal_compra > 0 else None, subtotal_margem, subtotal_pct_margem
             ])
+            total_geral_venda += subtotal_venda
+            total_geral_compra += subtotal_compra
+        
+        # Linha de Fechamento: TOTAL GERAL CONSOLIDADO
+        total_geral_margem = total_geral_venda - total_geral_compra
+        total_geral_pct = (total_geral_margem / total_geral_venda) if total_geral_venda > 0 else 0
+        linhas_resumo.append([
+            '', '', 'TOTAL GERAL CONSOLIDADO', '', '', '', '', total_geral_venda, '', total_geral_compra if total_geral_compra > 0 else None, total_geral_margem, total_geral_pct
+        ])
             
         df_excel_resumo = pd.DataFrame(linhas_resumo, columns=[
-            'CONTRATO', 'SIGLA/GRUPO', 'PEDIDO', 'Ref Prod', 'Descrição', 'Qtd Com', 'VLR UNIT', 'VLR TOTAL', 'VLR UNIT COMPRA', 'VLR TOTAL COMPRA'
+            'CONTRATO', 'SIGLA/GRUPO', 'PEDIDO', 'Ref Prod', 'Descrição', 'Qtd Com', 'VLR UNIT', 'VLR TOTAL', 'VLR UNIT COMPRA', 'VLR TOTAL COMPRA', 'MARGEM BRUTA', '% MARGEM'
         ])
         
         df_excel_resumo.to_excel(writer, sheet_name='RESUMO', index=False)
         ws_resumo = writer.sheets['RESUMO']
         ws_resumo.set_column('A:B', 16)
-        ws_resumo.set_column('C:E', 38)
+        ws_resumo.set_column('C:E', 36)
         ws_resumo.set_column('F:F', 12)
-        ws_resumo.set_column('G:J', 20, formato_moeda)
+        ws_resumo.set_column('G:J', 18, formato_moeda)
+        ws_resumo.set_column('K:K', 18, formato_moeda)
+        ws_resumo.set_column('L:L', 14, formato_percentual)
         
         for col_num, value in enumerate(df_excel_resumo.columns.values):
             ws_resumo.write(0, col_num, value, formato_cabecalho)
         
         for row_num, row_data in enumerate(linhas_resumo):
-            if 'TOTAL ACUMULADO' in str(row_data[2]):
+            txt = str(row_data[2])
+            if 'TOTAL GERAL CONSOLIDADO' in txt:
+                ws_resumo.set_row(row_num + 1, None, formato_total_geral)
+            elif 'TOTAL ACUMULADO' in txt:
                 ws_resumo.set_row(row_num + 1, None, formato_subtotal)
         
         # 2. ABAS INDIVIDUAIS

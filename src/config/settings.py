@@ -2,7 +2,7 @@
 
 APP_TITLE = "The Nehemizer - Portal Financeiro Saavedra"
 APP_SUBTITLE = "Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares."
-APP_VERSION = "1.2.1"
+APP_VERSION = "1.3.0"
 APP_ICON = "📊"
 
 # Paleta Corporativa Oficial Saavedra

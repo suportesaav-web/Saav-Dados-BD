@@ -102,7 +102,7 @@ else:
     if 'CNPJPARCEIRO' not in df.columns: df['CNPJPARCEIRO'] = 'N/A'
 
     if st.session_state.get('mapeamento_parceiros') is None:
-        parceiros_df = df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'ABA_DESTINO']].drop_duplicates()
+        parceiros_df = df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'ABA_DESTINO']].drop_duplicates(subset=['CODPARC', 'CNPJPARCEIRO'])
         parceiros_df['DESTINO'] = parceiros_df['ABA_DESTINO'].apply(lambda x: "NORMAL" if x == "NORMAL" else "CLIENTE")
         st.session_state['mapeamento_parceiros'] = parceiros_df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'DESTINO']]
         

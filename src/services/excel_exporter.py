@@ -144,7 +144,10 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
                 'CONTRATO', 'CNPJ_PARCEIRO', 'UF', 'COD_CLI_USO', 'RAZÃO SOCIAL', 'CNPJ_PARC_USO', 'CONVENIO', 'Ref Prod', 'Descrição', 'Qtd'
             ])
             
-            nome_sheet = str(aba)[:31].replace(':', '').replace('/', '')
+            import re
+            nome_sheet = re.sub(r'[\\\\*?:/\\[\\]]', '', str(aba))[:31].strip()
+            if not nome_sheet: nome_sheet = 'CLIENTE_DESCONHECIDO'
+            
             df_excel_aba.to_excel(writer, sheet_name=nome_sheet, index=False)
             ws_aba = writer.sheets[nome_sheet]
             ws_aba.set_column('A:D', 15)

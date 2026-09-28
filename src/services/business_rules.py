@@ -22,6 +22,8 @@ def normalizar_colunas_vendas(df: pd.DataFrame) -> pd.DataFrame:
         elif 'CONTRATO' in c_up: novas_colunas[col] = 'CONTRATOCLIENTE'
         elif 'UF' == c_up: novas_colunas[col] = 'UF'
         elif 'COD' in c_up and 'CLI' in c_up: novas_colunas[col] = 'CODCLIUSO'
+        elif 'COD' in c_up and 'PARC' in c_up: novas_colunas[col] = 'CODPARC'
+        elif 'CNPJ' in c_up and 'PARCEIRO' in c_up: novas_colunas[col] = 'CNPJPARCEIRO'
     
     df = df.rename(columns=novas_colunas)
     df = df.loc[:, ~df.columns.duplicated()]

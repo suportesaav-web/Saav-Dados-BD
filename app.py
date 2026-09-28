@@ -87,9 +87,52 @@ else:
             st.session_state['df_processado'] = df_final
             st.session_state['arquivos_assinatura'] = assinatura_atual
             st.session_state['excel_export_bytes'] = None  # Invalida exportação anterior
+            st.session_state['mapeamento_parceiros'] = None
             st.toast('Equalização de dados atualizada com sucesso!', icon='✅')
 
-    df = st.session_state['df_processado']
+    df = st.session_state['df_processado'].copy()
+
+    st.divider()
+
+    # --- MAPEAMENTO DE PARCEIROS ---
+    st.subheader("⚙️ Classificação de Parceiros")
+    st.markdown("Defina se as vendas de cada parceiro devem ser direcionadas para a aba **NORMAL** ou para a aba do **CLIENTE**.")
+    
+    if 'CODPARC' not in df.columns: df['CODPARC'] = 'N/A'
+    if 'CNPJPARCEIRO' not in df.columns: df['CNPJPARCEIRO'] = 'N/A'
+
+    if st.session_state.get('mapeamento_parceiros') is None:
+        parceiros_df = df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'ABA_DESTINO']].drop_duplicates()
+        parceiros_df['DESTINO'] = parceiros_df['ABA_DESTINO'].apply(lambda x: "NORMAL" if x == "NORMAL" else "CLIENTE")
+        st.session_state['mapeamento_parceiros'] = parceiros_df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'DESTINO']]
+        
+    parceiros_editados = st.data_editor(
+        st.session_state['mapeamento_parceiros'],
+        column_config={
+            "DESTINO": st.column_config.SelectboxColumn(
+                "Aba Destino",
+                help="Selecione NORMAL para contingência ou CLIENTE para a aba do respectivo cliente.",
+                options=["NORMAL", "CLIENTE"],
+                required=True,
+            )
+        },
+        disabled=['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL'],
+        hide_index=True,
+        use_container_width=True,
+        key="editor_parceiros"
+    )
+    
+    st.session_state['mapeamento_parceiros'] = parceiros_editados
+
+    # Atualiza ABA_DESTINO e SIGLA_RESUMO no dataframe baseado na seleção do usuário
+    mapeamento_dict = parceiros_editados.set_index(['CODPARC', 'CNPJPARCEIRO'])['DESTINO'].to_dict()
+    
+    def aplicar_mapeamento(row):
+        destino_selecionado = mapeamento_dict.get((row['CODPARC'], row['CNPJPARCEIRO']), "NORMAL")
+        return "NORMAL" if destino_selecionado == "NORMAL" else row['RAZAOSOCIAL']
+        
+    df['ABA_DESTINO'] = df.apply(aplicar_mapeamento, axis=1)
+    df['SIGLA_RESUMO'] = df['ABA_DESTINO']
 
     st.divider()
 

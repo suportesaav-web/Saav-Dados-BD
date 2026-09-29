@@ -125,30 +125,6 @@ def render_kpis_e_graficos(df: pd.DataFrame):
     itens_sem_preco = int(df['PRECO_COMPRA_FINAL'].isna().sum())
     itens_sem_ref = int((df['REFPROD'] == 'SEM_REF').sum())
     
-    # 1ª Linha: Visão Financeira Executiva
-    kpi1, kpi2, kpi3, kpi4 = st.columns(4)
-    with kpi1:
-        st.metric("Total Faturado (Vendas)", f"R$ {vlr_total_venda:,.2f}")
-    with kpi2:
-        st.metric("Custo Estimado (Compras)", f"R$ {vlr_total_compra:,.2f}", help="Custo total com base nos contratos BD e tabela normal.")
-    with kpi3:
-        st.metric("Margem Bruta Estimada", f"R$ {margem_bruta:,.2f}", delta=f"{pct_margem:.1f}% Margem")
-    with kpi4:
-        if itens_sem_preco > 0:
-            st.metric("Preços Pendentes", f"{itens_sem_preco:,}", delta="Revisar na prévia", delta_color="inverse")
-        else:
-            st.metric("Cobertura de Preços", "100%", delta="Auditoria OK")
-
-    # 2ª Linha: Visão Operacional e Distribuição de Contratos
-    col_op1, col_op2, col_op3 = st.columns(3)
-    with col_op1:
-        st.metric("Volume de Linhas", f"{total_linhas:,}")
-    with col_op2:
-        pct_bd = (total_bd / total_linhas * 100) if total_linhas > 0 else 0
-        st.metric("Itens com Contrato BD", f"{total_bd:,}", delta=f"{pct_bd:.1f}% faturado sob contrato")
-    with col_op3:
-        pct_norm = (total_normal / total_linhas * 100) if total_linhas > 0 else 0
-        st.metric("Itens na Aba NORMAL", f"{total_normal:,}", delta=f"-{pct_norm:.1f}% contingência", delta_color="inverse")
 
     # Alertas Preventivos
     if itens_sem_ref > 0:
@@ -156,20 +132,4 @@ def render_kpis_e_graficos(df: pd.DataFrame):
     elif itens_sem_preco > 0:
         st.info(f"💡 Dica Financeira: Há {itens_sem_preco} item(ns) sem preço de compra definido. Você pode preenchê-los na prévia editável abaixo antes de exportar.")
 
-    # Gráficos de Apoio com paleta oficial Saavedra
-    with st.expander("📊 Análise Gráfica de Distribuição & Margens", expanded=False):
-        col_c1, col_c2 = st.columns(2)
-        
-        with col_c1:
-            st.markdown("**Faturamento por Grupo de Cliente (R$)**")
-            chart_data = df.groupby('GRUPO_CLIENTE')['VLRTOTAL'].sum().reset_index()
-            chart_data = chart_data.sort_values(by='VLRTOTAL', ascending=False).set_index('GRUPO_CLIENTE')
-            st.bar_chart(chart_data, color=PRIMARY_COLOR)
-            
-        with col_c2:
-            st.markdown("**Proporção de Itens (Contrato BD vs NORMAL)**")
-            status_data = pd.DataFrame({
-                'Categoria': ['Contrato BD', 'Aba NORMAL'],
-                'Qtd Itens': [int(total_bd), int(total_normal)]
-            }).set_index('Categoria')
-            st.bar_chart(status_data, color=DARK_NEUTRAL)
+

@@ -185,6 +185,9 @@ else:
         hide_index=True,
         disabled=colunas_bloqueadas,
         column_config={
+            "SIGLA_RESUMO": "nome da aba",
+            "REFPROD": "Catalogo",
+            "QTDCOM": "Quantidade",
             "VLR UNIT VENDA": st.column_config.NumberColumn(format="R$ %.2f"),
             "VLRTOTAL": st.column_config.NumberColumn(format="R$ %.2f"),
             "PRECO_COMPRA_FINAL": st.column_config.NumberColumn(format="R$ %.2f"),

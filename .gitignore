@@ -65,7 +65,7 @@ env.bak/
 venv.bak/
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
 # Excel / Office temp files
 ~$*.xlsx

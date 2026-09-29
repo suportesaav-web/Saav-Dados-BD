@@ -14,7 +14,7 @@
 | **Área Negocial** | Departamento Financeiro / Compras / Logística |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
 | **Status do Sistema** | 🟢 **Em Produção** |
-| **URL em Produção** | [https://Saav-Dados-BD-saavedra.streamlit.app/](https://Saav-Dados-BD-saavedra.streamlit.app/) |
+| **URL em Produção** | [https://saavedra-dados-bd.streamlit.app/](https://saavedra-dados-bd.streamlit.app/) |
 | **Desenvolvedor Principal** | Jonatan Severo |
 | **Unidade de Negócio** | Saavedra Suporte Web |
 | **E-mail de Suporte** | `suporte.saav@saavedra.com.br` |

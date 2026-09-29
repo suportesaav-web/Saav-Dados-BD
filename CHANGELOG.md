@@ -1,6 +1,6 @@
 # 📜 Registro de Mudanças (Changelog)
 
-Todas as alterações notáveis no projeto **The Nehemizer** serão documentadas neste arquivo.
+Todas as alterações notáveis no projeto **Saav Dados BD** serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
@@ -46,7 +46,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### ✨ Adicionado
 - **Arquitetura Modular (`src/`):** Divisão de responsabilidades em `config/`, `services/` e `utils/`.
-- **Guia Inicial & Download de Template:** Tela amigável de boas-vindas com instruções e botão para baixar planilha de exemplo (`Template_Vendas_TheNehemizer_Exemplo.xlsx`).
+- **Guia Inicial & Download de Template:** Tela amigável de boas-vindas com instruções e botão para baixar planilha de exemplo (`Template_Vendas_Saav_Dados_BD_Exemplo.xlsx`).
 - **Filtro Rápido de Preços Pendentes:** Toggle `🔍 Apenas preços pendentes` para facilitar o preenchimento rápido de itens sem preço de compra.
 - **Gráficos Executivos:** Visualização gráfica de faturamento por cliente e distribuição de itens (Contrato BD vs Aba NORMAL).
 - **Parser de PDF com Regex Flexível:** Suporte a múltiplos padrões de formatação monetária (com e sem `R$`, pontos e vírgulas) e identificação de clientes em páginas múltiplas.

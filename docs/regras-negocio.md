@@ -1,14 +1,14 @@
-# ⚖️ Regras de Negócio e Mapeamentos — The Nehemizer
+# ⚖️ Regras de Negócio e Mapeamentos — Saav Dados BD
 
 > **Documento Funcional e de Governança de Negócio**  
-> **Sistema:** The Nehemizer (Portal Financeiro Saavedra)  
+> **Sistema:** Saav Dados BD (Portal Financeiro Saavedra)  
 > **Aplicação:** Conciliação, auditoria e equalização de contratos de distribuição hospitalar.
 
 ---
 
 ## 1. 🎯 Propósito Operacional
 
-O **The Nehemizer** foi desenvolvido para garantir a conformidade e a integridade financeira no faturamento de produtos hospitalares (especialmente da linha Becton Dickinson - BD) distribuídos pela **Saavedra**.
+O **Saav Dados BD** foi desenvolvido para garantir a conformidade e a integridade financeira no faturamento de produtos hospitalares (especialmente da linha Becton Dickinson - BD) distribuídos pela **Saavedra**.
 
 O sistema opera na intersecção de três fontes de dados:
 1. **Relatório Bruto de Vendas:** Registros diários/mensais extraídos do ERP da Saavedra contendo pedidos faturados.
@@ -19,7 +19,7 @@ O sistema opera na intersecção de três fontes de dados:
 
 ## 2. ⚖️ A Regra Suprema de Contingência
 
-A **Regra Suprema de Contingência** é a espinha dorsal lógica do The Nehemizer. Ela estabelece um critério determinístico para classificar se uma venda deve usufruir da precificação de contrato ou se deve ser segregada para tratamento padrão.
+A **Regra Suprema de Contingência** é a espinha dorsal lógica do Saav Dados BD. Ela estabelece um critério determinístico para classificar se uma venda deve usufruir da precificação de contrato ou se deve ser segregada para tratamento padrão.
 
 ```mermaid
 flowchart TD
@@ -63,7 +63,7 @@ A tabela oficial de correspondência está centralizada no arquivo de configura�
 | **FORA DE CONTRATO** | Produtos sem correspondência tabelada | — | `NORMAL` | `NORMAL` |
 
 > [!NOTE]
-> Os números de contrato e termos acima são gerenciados de forma centralizada em [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/The-Nehemizer/src/config/settings.py) via estrutura `CLIENTES_CONFIG`.
+> Os números de contrato e termos acima são gerenciados de forma centralizada em [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/Saav-Dados-BD/src/config/settings.py) via estrutura `CLIENTES_CONFIG`.
 
 ---
 
@@ -96,7 +96,7 @@ Os relatórios exportados pelo ERP podem conter cabeçalhos deslocados ou nomes 
 
 ## 6. 📊 Estrutura de Exportação (XlsxWriter)
 
-A planilha gerada (`PROCESSADO_Relatorio_Final_TheNehemizer.xlsx`) atende ao padrão contábil executivo:
+A planilha gerada (`PROCESSADO_Relatorio_Final_Saav_Dados_BD.xlsx`) atende ao padrão contábil executivo:
 
 1. **Aba RESUMO (Consolidada):**
    * Agrupada por cliente/aba destino (`SIGLA_RESUMO`).
@@ -112,7 +112,7 @@ A planilha gerada (`PROCESSADO_Relatorio_Final_TheNehemizer.xlsx`) atende ao pad
 
 ## 7. 🛠️ Como Adicionar ou Atualizar um Contrato
 
-Para atualizar um contrato vigente ou cadastrar um novo cliente, basta alterar a lista `CLIENTES_CONFIG` em [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/The-Nehemizer/src/config/settings.py):
+Para atualizar um contrato vigente ou cadastrar um novo cliente, basta alterar a lista `CLIENTES_CONFIG` em [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/Saav-Dados-BD/src/config/settings.py):
 
 ```python
 # Exemplo de inclusão de novo hospital:

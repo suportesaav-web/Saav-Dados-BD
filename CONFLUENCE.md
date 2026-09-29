@@ -1,4 +1,4 @@
-# 📑 DOCUMENTAÇÃO TÉCNICA E OPERACIONAL — THE NEHEMIZER (SAAVEDRA)
+# 📑 DOCUMENTAÇÃO TÉCNICA E OPERACIONAL — Saav Dados BD (SAAVEDRA)
 
 > **Observação:** Esta documentação foi formatada para ser copiada e colada diretamente no **Confluence** ou exportada como base de conhecimento da empresa.
 
@@ -8,13 +8,13 @@
 
 | Atributo | Detalhe |
 | :--- | :--- |
-| **Nome do Sistema** | The Nehemizer — Portal Financeiro Saavedra |
-| **Código do Projeto** | `SAAV-NEHEMIZER` |
+| **Nome do Sistema** | Saav Dados BD — Portal Financeiro Saavedra |
+| **Código do Projeto** | `SAAV-Saav Dados BD` |
 | **Versão Atual** | `1.3.0` |
 | **Área Negocial** | Departamento Financeiro / Compras / Logística |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
 | **Status do Sistema** | 🟢 **Em Produção** |
-| **URL em Produção** | [https://the-nehemizer-saavedra.streamlit.app/](https://the-nehemizer-saavedra.streamlit.app/) |
+| **URL em Produção** | [https://Saav-Dados-BD-saavedra.streamlit.app/](https://Saav-Dados-BD-saavedra.streamlit.app/) |
 | **Desenvolvedor Principal** | Jonatan Severo |
 | **Unidade de Negócio** | Saavedra Suporte Web |
 | **E-mail de Suporte** | `suporte.saav@saavedra.com.br` |
@@ -30,13 +30,13 @@ A operação comercial da **Saavedra** envolve a comercialização de suprimento
 
 Anteriormente, o processo de consolidação de relatórios de vendas, verificação de preços tabelados em propostas comerciais em PDF e segregação de vendas fora de contrato dependia de digitação e cruzamento manual em planilhas Excel, demandando horas de trabalho e gerando riscos de inconsistência financeira.
 
-### 2.2 Solução: The Nehemizer
-O **The Nehemizer** é uma ferramenta de automação inteligente que:
+### 2.2 Solução: Saav Dados BD
+O **Saav Dados BD** é uma ferramenta de automação inteligente que:
 1. **Ingere** relatórios de vendas brutos (Excel/CSV) e identifica automaticamente as colunas principais.
 2. **Extrai** com precisão os preços unitários e vigências contidas em propostas contratuais no formato PDF.
 3. **Aplica a Regra Suprema de Contingência**, direcionando itens sem contrato BD para a aba `NORMAL` e itens contratados para suas respectivas abas operacionais.
 4. **Permite edição em tempo real** diretamente no navegador para correções ou preenchimento de preços pendentes.
-5. **Gera uma planilha executiva padronizada** (`PROCESSADO_Relatorio_Final_TheNehemizer.xlsx`) pronta para conciliação financeira e auditoria.
+5. **Gera uma planilha executiva padronizada** (`PROCESSADO_Relatorio_Final_Saav_Dados_BD.xlsx`) pronta para conciliação financeira e auditoria.
 
 ---
 
@@ -157,7 +157,7 @@ streamlit run app.py --server.port 8501 --server.address 0.0.0.0
 ## ❓ 7. Troubleshooting e Perguntas Frequentes (FAQ)
 
 ### Q1: O que fazer se um novo contrato ou cliente for adicionado?
-**R:** Basta atualizar a configuração `CLIENTES_CONFIG` no arquivo [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/The-Nehemizer/src/config/settings.py) incluindo o termo identificador, CNPJ (se houver) e o número do contrato correspondente.
+**R:** Basta atualizar a configuração `CLIENTES_CONFIG` no arquivo [`src/config/settings.py`](file:///c:/Users/SAAV054/Documents/Desenvolvimento/Saav-Dados-BD/src/config/settings.py) incluindo o termo identificador, CNPJ (se houver) e o número do contrato correspondente.
 
 ### Q2: Por que um produto foi parar na aba `NORMAL` em vez da aba do cliente?
 **R:** Isso ocorre quando o produto vendido não foi encontrado na tabela do PDF do contrato correspondente àquele cliente. O sistema aplica a *Regra Suprema* e destina o item para `NORMAL` para evitar precificação incorreta.

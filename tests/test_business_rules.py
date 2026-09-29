@@ -1,4 +1,4 @@
-"""Testes unitários automatizados para regras de negócio e mapeamento do The Nehemizer."""
+"""Testes unitários automatizados para regras de negócio e mapeamento do Saav Dados BD."""
 
 import pandas as pd
 import numpy as np

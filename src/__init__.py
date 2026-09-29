@@ -1,1 +1,1 @@
-"""Módulo raiz do sistema The Nehemizer."""
+"""Módulo raiz do sistema Saav Dados BD."""

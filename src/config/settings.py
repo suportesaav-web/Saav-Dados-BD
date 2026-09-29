@@ -1,6 +1,6 @@
 """Configurações centrais, mapeamentos de contratos e identidade visual oficial da Saavedra."""
 
-APP_TITLE = "The Nehemizer - Portal Financeiro Saavedra"
+APP_TITLE = "Saav Dados BD - Portal Financeiro Saavedra"
 APP_SUBTITLE = "Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares."
 APP_VERSION = "1.3.0"
 APP_ICON = "📊"

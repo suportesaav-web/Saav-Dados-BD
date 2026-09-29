@@ -23,7 +23,7 @@ def render_sidebar_help():
     """Renderiza o menu lateral de ajuda com instruções completas de uso do sistema."""
     with st.sidebar:
         st.markdown(f"### 📖 Central de Ajuda")
-        st.markdown(f"**The Nehemizer** `v{APP_VERSION}`")
+        st.markdown(f"**Saav Dados BD** `v{APP_VERSION}`")
         st.divider()
         
         with st.expander("🚀 Como Usar (Passo a Passo)", expanded=True):
@@ -52,7 +52,7 @@ def render_sidebar_help():
             st.download_button(
                 label="📄 Download Template (.xlsx)",
                 data=template_bytes,
-                file_name="Template_Vendas_TheNehemizer_Exemplo.xlsx",
+                file_name="Template_Vendas_Saav_Dados_BD_Exemplo.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 use_container_width=True,
                 key="sidebar_download_template"
@@ -103,7 +103,7 @@ def render_guia_inicial():
     st.download_button(
         label="📄 Baixar Planilha Modelo (.xlsx)",
         data=template_bytes,
-        file_name="Template_Vendas_TheNehemizer_Exemplo.xlsx",
+        file_name="Template_Vendas_Saav_Dados_BD_Exemplo.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         help="Baixe uma planilha estruturada para testar as regras de negócio do sistema."
     )

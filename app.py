@@ -1,4 +1,4 @@
-"""The Nehemizer - Portal Financeiro Saavedra
+"""Saav Dados BD - Portal Financeiro Saavedra
 Orquestrador da aplicação web Streamlit.
 """
 
@@ -66,7 +66,7 @@ else:
     
     # Processa se for a primeira vez ou se qualquer arquivo foi alterado/adicionado
     if st.session_state['df_processado'] is None or st.session_state['arquivos_assinatura'] != assinatura_atual:
-        with st.spinner('The Nehemizer está processando e equalizando os dados...'):
+        with st.spinner('Saav Dados BD está processando e equalizando os dados...'):
             # 1. Leitura e normalização de vendas
             df_vendas_raw = ler_arquivo_tabela(arquivo_excel)
             df_vendas = normalizar_colunas_vendas(df_vendas_raw)
@@ -217,7 +217,7 @@ else:
         st.download_button(
             label="📄 Baixar Planilha Consolidada (.xlsx)",
             data=st.session_state['excel_export_bytes'],
-            file_name="PROCESSADO_Relatorio_Final_TheNehemizer.xlsx",
+            file_name="PROCESSADO_Relatorio_Final_Saav_Dados_BD.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             type="primary",
             use_container_width=True

@@ -85,3 +85,8 @@ Thumbs.db
 PROCESSADO_*.xlsx
 output/
 temp/
+
+# Scratch & Dev Data
+scratch_*.py
+docs/*.xlsx
+

@@ -16,7 +16,7 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
         formato_cabecalho_aba = workbook.add_format({'bold': True, 'bg_color': SECONDARY_COLOR, 'font_color': 'white', 'border': 1})
         
         # 1. ABA RESUMO
-        df_resumo_export = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO']).agg({
+        df_resumo_export = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO', 'VLRUNIT']).agg({
             'SIGLA_RESUMO': 'first',
             'CONTRATO_FINAL': 'first',
             'QTDCOM': 'sum',
@@ -34,7 +34,7 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
             subtotal_venda = 0.0
             subtotal_compra = 0.0
             for _, row in group.iterrows():
-                vlr_unit_venda = row['VLRTOTAL'] / row['QTDCOM'] if row['QTDCOM'] > 0 else 0
+                vlr_unit_venda = row['VLRUNIT']
                 vlr_compra = row.get('VLR COMPRA', 0.0)
                 linhas_resumo.append([
                     row['SIGLA_RESUMO'], 

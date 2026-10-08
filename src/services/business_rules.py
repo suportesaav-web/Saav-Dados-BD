@@ -16,7 +16,12 @@ def normalizar_colunas_vendas(df: pd.DataFrame) -> pd.DataFrame:
         if 'REF' in c_up and 'PROD' in c_up: novas_colunas[col] = 'REFPROD'
         elif 'DESC' in c_up: novas_colunas[col] = 'DESCRICAO'
         elif 'QTD' in c_up: novas_colunas[col] = 'QTDCOM'
-        elif 'VLR' in c_up or 'VALOR' in c_up: novas_colunas[col] = 'VLRTOTAL'
+        elif 'UNIT' in c_up and ('VLR' in c_up or 'VALOR' in c_up): novas_colunas[col] = 'VLRUNIT'
+        elif 'TOTAL' in c_up and ('VLR' in c_up or 'VALOR' in c_up): novas_colunas[col] = 'VLRTOTAL'
+        elif 'VLR' in c_up or 'VALOR' in c_up: 
+            if 'VLRUNIT' not in novas_colunas.values() and 'UNIT' not in c_up:
+                novas_colunas[col] = 'VLRTOTAL'
+        elif 'CONTROLE' in c_up: novas_colunas[col] = 'CONTROLE'
         elif 'RAZ' in c_up and 'SOC' in c_up: novas_colunas[col] = 'RAZAOSOCIAL'
         elif 'CONV' in c_up: novas_colunas[col] = 'CONVENIO'
         elif 'CONTRATO' in c_up: novas_colunas[col] = 'CONTRATOCLIENTE'
@@ -33,6 +38,8 @@ def normalizar_colunas_vendas(df: pd.DataFrame) -> pd.DataFrame:
     if 'REFPROD' not in df.columns: df['REFPROD'] = 'SEM_REF'
     if 'QTDCOM' not in df.columns: df['QTDCOM'] = 1
     if 'VLRTOTAL' not in df.columns: df['VLRTOTAL'] = 0.0
+    if 'VLRUNIT' not in df.columns: df['VLRUNIT'] = np.where(df['QTDCOM'] > 0, df['VLRTOTAL'] / df['QTDCOM'], 0.0)
+    if 'CONTROLE' not in df.columns: df['CONTROLE'] = ''
     if 'DESCRICAO' not in df.columns: df['DESCRICAO'] = 'SEM DESCRICAO'
     if 'CONTRATOCLIENTE' not in df.columns: df['CONTRATOCLIENTE'] = ''
     

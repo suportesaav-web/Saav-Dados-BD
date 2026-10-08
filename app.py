@@ -161,7 +161,7 @@ else:
         resumo_df['VLR UNIT VENDA'] = np.where(resumo_df['QTDCOM'] > 0, resumo_df['VLRTOTAL'] / resumo_df['QTDCOM'], 0)
         resumo_df['VLR COMPRA'] = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO'])['VLR COMPRA'].first().reset_index(drop=True) if 'VLR COMPRA' in df.columns else 0.0
         resumo_df['TOT VLR COMPRA'] = resumo_df['QTDCOM'] * resumo_df['VLR COMPRA']
-        resumo_df['CONTRATO'] = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO'])['CONTRATO_FINAL'].first().reset_index(drop=True) if 'CONTRATO_FINAL' in df.columns else resumo_df['ABA_DESTINO']
+        resumo_df['CONTRATO'] = resumo_df['SIGLA_RESUMO']
         resumo_df['ABA_DESTINO_ORIGINAL'] = resumo_df['ABA_DESTINO'] # Key for tracking edits
         st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'CONTRATO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'VLR COMPRA', 'TOT VLR COMPRA', 'ABA_DESTINO_ORIGINAL']].copy()
         st.session_state['last_df_hash'] = hash(df.to_string())

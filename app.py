@@ -146,8 +146,10 @@ else:
     if 'resumo_df_editado' not in st.session_state or st.session_state.get('last_df_hash') != hash(df.to_string()):
         resumo_df = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO']).agg(agg_dict).reset_index()
         resumo_df['VLR UNIT VENDA'] = np.where(resumo_df['QTDCOM'] > 0, resumo_df['VLRTOTAL'] / resumo_df['QTDCOM'], 0)
+        resumo_df['VLR COMPRA'] = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO'])['VLR COMPRA'].first().reset_index(drop=True) if 'VLR COMPRA' in df.columns else 0.0
+        resumo_df['TOT VLR COMPRA'] = resumo_df['QTDCOM'] * resumo_df['VLR COMPRA']
         resumo_df['ABA_DESTINO_ORIGINAL'] = resumo_df['ABA_DESTINO'] # Key for tracking edits
-        st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'ABA_DESTINO_ORIGINAL']].copy()
+        st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'VLR COMPRA', 'TOT VLR COMPRA', 'ABA_DESTINO_ORIGINAL']].copy()
         st.session_state['last_df_hash'] = hash(df.to_string())
     
     opcoes_destino_resumo = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]
@@ -157,32 +159,35 @@ else:
         use_container_width=True, 
         hide_index=True,
         column_config={
-            "SIGLA_RESUMO": st.column_config.SelectboxColumn("Aba Destino", options=opcoes_destino_resumo, required=True),
-            "REFPROD": "Catalogo",
-            "QTDCOM": "Quantidade",
-            "VLR UNIT VENDA": st.column_config.NumberColumn("VLR UNIT VENDA", format="R$ %.2f"),
+            "SIGLA_RESUMO": st.column_config.SelectboxColumn("ABA DESTINO", options=opcoes_destino_resumo, required=True),
+            "REFPROD": "CATALOGO",
+            "DESCRICAO": "DESCRICAO",
+            "QTDCOM": "QUANTIDADE",
+            "VLR UNIT VENDA": st.column_config.NumberColumn("VLR UNIT VENDA", format="R$ %.2f", disabled=True),
             "VLRTOTAL": st.column_config.NumberColumn("VLR TOTAL", format="R$ %.2f", disabled=True),
+            "VLR COMPRA": st.column_config.NumberColumn("VLR COMPRA", format="R$ %.2f"),
+            "TOT VLR COMPRA": st.column_config.NumberColumn("TOT VLR COMPRA", format="R$ %.2f", disabled=True),
             "ABA_DESTINO_ORIGINAL": None # Hide original tracker column
         },
-        disabled=["REFPROD", "DESCRICAO", "QTDCOM", "VLRTOTAL"],
+        disabled=["REFPROD", "DESCRICAO", "QTDCOM", "VLR UNIT VENDA", "VLRTOTAL", "TOT VLR COMPRA"],
         key="editor_resumo"
     )
     
-    # Calcular automaticamente se o VLR UNIT VENDA for alterado e atualizar SIGLA_RESUMO
+    # Calcular automaticamente se o VLR COMPRA for alterado
     if not resumo_df_ui.equals(st.session_state['resumo_df_editado']):
-        resumo_df_ui['VLRTOTAL'] = resumo_df_ui['QTDCOM'] * resumo_df_ui['VLR UNIT VENDA']
+        resumo_df_ui['TOT VLR COMPRA'] = resumo_df_ui['QTDCOM'] * resumo_df_ui['VLR COMPRA']
         st.session_state['resumo_df_editado'] = resumo_df_ui.copy()
         st.rerun()
 
     # Aplica as alterações feitas na prévia de volta no DataFrame principal
     # Cruzando por ABA_DESTINO (original), REFPROD e DESCRICAO
-    mapeamento_previa = resumo_df_ui.set_index(['ABA_DESTINO_ORIGINAL', 'REFPROD', 'DESCRICAO'])[['SIGLA_RESUMO', 'VLR UNIT VENDA']].to_dict('index')
+    mapeamento_previa = resumo_df_ui.set_index(['ABA_DESTINO_ORIGINAL', 'REFPROD', 'DESCRICAO'])[['SIGLA_RESUMO', 'VLR COMPRA', 'TOT VLR COMPRA']].to_dict('index')
     
     def aplicar_edicoes_previa(row):
         chave = (row['ABA_DESTINO'], row['REFPROD'], row['DESCRICAO'])
         if chave in mapeamento_previa:
             nova_aba = mapeamento_previa[chave]['SIGLA_RESUMO']
-            novo_vlr_unit = mapeamento_previa[chave]['VLR UNIT VENDA']
+            novo_vlr_compra = mapeamento_previa[chave]['VLR COMPRA']
             
             # Se for CLIENTE (Usar Razão Social), usamos a RAZAOSOCIAL original da linha
             if nova_aba == "CLIENTE (Usar Razão Social)":
@@ -190,7 +195,8 @@ else:
                 
             row['ABA_DESTINO'] = nova_aba
             row['SIGLA_RESUMO'] = nova_aba
-            row['VLRTOTAL'] = row['QTDCOM'] * novo_vlr_unit
+            row['VLR COMPRA'] = novo_vlr_compra
+            row['TOT VLR COMPRA'] = row['QTDCOM'] * novo_vlr_compra
         return row
         
     df = df.apply(aplicar_edicoes_previa, axis=1)

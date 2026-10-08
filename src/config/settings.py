@@ -71,6 +71,11 @@ CLIENTES_CONFIG = [
         'sigla': 'HMD',
         'contrato': '130',
         'termos': ['HMD', 'MÃE DE DEUS', 'MAE DE DEUS']
+    },
+    {
+        'sigla': 'HMV',
+        'contrato': '131',
+        'termos': ['HMV', 'MOINHOS DE VENTO']
     }
 ]
 

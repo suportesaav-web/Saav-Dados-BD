@@ -87,8 +87,21 @@ else:
         parceiros_df['DESTINO'] = parceiros_df['GRUPO_CLIENTE'].apply(lambda x: x if (x != "NORMAL" and x in CONTRATOS_MAPPING) else "NORMAL")
         st.session_state['mapeamento_parceiros'] = parceiros_df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'DESTINO']]
         
-    opcoes_destino = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]
+    if 'custom_abas' not in st.session_state:
+        st.session_state['custom_abas'] = []
 
+    st.markdown("##### ➕ Criar Nova Aba Customizada")
+    col_input, col_btn = st.columns([4, 1])
+    with col_input:
+        nova_aba_input = st.text_input("Digite o nome da nova aba ou sigla (ex: NOVO HOSPITAL)", key="nova_aba_input", label_visibility="collapsed")
+    with col_btn:
+        if st.button("Adicionar Aba", use_container_width=True):
+            nova_aba_formatada = nova_aba_input.strip().upper()
+            if nova_aba_formatada and nova_aba_formatada not in st.session_state['custom_abas'] and nova_aba_formatada not in CONTRATOS_MAPPING and nova_aba_formatada != "NORMAL":
+                st.session_state['custom_abas'].append(nova_aba_formatada)
+                st.rerun()
+                
+    opcoes_destino = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k] + st.session_state['custom_abas']
         
     parceiros_editados = st.data_editor(
         st.session_state['mapeamento_parceiros'],
@@ -152,7 +165,7 @@ else:
         st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'VLR COMPRA', 'TOT VLR COMPRA', 'ABA_DESTINO_ORIGINAL']].copy()
         st.session_state['last_df_hash'] = hash(df.to_string())
     
-    opcoes_destino_resumo = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]
+    opcoes_destino_resumo = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k] + st.session_state.get('custom_abas', [])
 
     resumo_df_ui = st.data_editor(
         st.session_state['resumo_df_editado'], 

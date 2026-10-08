@@ -2,9 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 from src.config.settings import APP_TITLE, APP_ICON, CONTRATOS_MAPPING
 from src.services.table_service import ler_arquivo_tabela

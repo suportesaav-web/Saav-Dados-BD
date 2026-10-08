@@ -1,8 +1,8 @@
 """Configurações centrais, mapeamentos de contratos e identidade visual oficial da Saavedra."""
 
-APP_TITLE = "Saav Dados BD - Portal Financeiro Saavedra"
-APP_SUBTITLE = "Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares."
-APP_VERSION = "1.3.0"
+APP_TITLE = "Saav dados de BD/ Cliente"
+APP_SUBTITLE = "Agrupamento e estruturação de relatórios de faturamento por cliente."
+APP_VERSION = "2.0.0"
 APP_ICON = "📊"
 
 # Paleta Corporativa Oficial Saavedra
@@ -66,6 +66,11 @@ CLIENTES_CONFIG = [
         'sigla': 'GHC',
         'contrato': '450166419',
         'termos': ['GHC', '450166419']
+    },
+    {
+        'sigla': 'HMD',
+        'contrato': '130',
+        'termos': ['HMD', 'MÃE DE DEUS', 'MAE DE DEUS']
     }
 ]
 

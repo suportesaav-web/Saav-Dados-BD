@@ -1,7 +1,7 @@
 <!-- HEADER DO PROJETO -->
 <div align="center">
 
-  <h1>Saav Dados BD</h1>
+  <h1>The Nehemizer</h1>
   <p><strong>Portal Financeiro & Equalizador de Contratos Hospitalares Saavedra</strong></p>
 
   <p>
@@ -36,7 +36,7 @@
   <thead>
     <tr>
       <th width="50%" align="left">❌ Processo Anterior (Manual & Fragmentado)</th>
-      <th width="50%" align="left">✅ Com Saav Dados BD (Automatizado & Integrado)</th>
+      <th width="50%" align="left">✅ Com The Nehemizer (Automatizado & Integrado)</th>
     </tr>
   </thead>
   <tbody>
@@ -65,7 +65,7 @@
 
 <div align="justify">
 
-O **Saav Dados BD** é uma solução corporativa desenvolvida para a **Saavedra** com o propósito de blindar a operação comercial e financeira na distribuição de materiais hospitalares (com destaque para a linha Becton Dickinson - BD).
+O **The Nehemizer** é uma solução corporativa desenvolvida para a **Saavedra** com o propósito de blindar a operação comercial e financeira na distribuição de materiais hospitalares (com destaque para a linha Becton Dickinson - BD).
 
 Ao automatizar o cruzamento entre as vendas faturadas e as propostas comerciais vigentes, o sistema elimina discrepâncias de faturamento, assegura margens contratuais e fornece relatórios executivos prontos para auditoria interna e conciliação com parceiros.
 
@@ -84,7 +84,7 @@ Ao automatizar o cruzamento entre as vendas faturadas e as propostas comerciais 
 
 ## 🔄 Camada 2: Como Funciona (Jornada do Usuário)
 
-O fluxo operacional do Saav Dados BD é intuitivo e desenhado para apoiar o dia a dia do time financeiro:
+O fluxo operacional do The Nehemizer é intuitivo e desenhado para apoiar o dia a dia do time financeiro:
 
 ```
 [ 1. UPLOAD DOS ARQUIVOS ] 
@@ -122,7 +122,7 @@ A espinha dorsal do sistema consiste em determinar de forma automatizada o desti
 2. **Itens Fora de Contrato (Contingência):** Se o produto não constar na proposta BD do cliente, o sistema automaticamente o encaminha para a aba **`NORMAL`** com o preço da tabela de compra padrão, protegendo a operação contra faturamentos indevidos.
 
 ### 🏥 Suporte a Múltiplas Instituições & Contratos
-O Saav Dados BD reconhece e classifica automaticamente faturamentos direcionados aos principais hospitais e planos de saúde parceiros da Saavedra, tais como:
+O The Nehemizer reconhece e classifica automaticamente faturamentos direcionados aos principais hospitais e planos de saúde parceiros da Saavedra, tais como:
 
 <p align="center">
   <img src="https://img.shields.io/badge/Cliente-UNIMED-2B6CB0?style=flat-square" alt="UNIMED" />

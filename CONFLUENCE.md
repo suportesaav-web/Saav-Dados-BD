@@ -1,4 +1,4 @@
-# 📑 DOCUMENTAÇÃO TÉCNICA E OPERACIONAL — Saav Dados BD (SAAVEDRA)
+# 📑 DOCUMENTAÇÃO TÉCNICA E OPERACIONAL — The Nehemizer (SAAVEDRA)
 
 > **Observação:** Esta documentação foi formatada para ser copiada e colada diretamente no **Confluence** ou exportada como base de conhecimento da empresa.
 
@@ -8,8 +8,8 @@
 
 | Atributo | Detalhe |
 | :--- | :--- |
-| **Nome do Sistema** | Saav Dados BD — Portal Financeiro Saavedra |
-| **Código do Projeto** | `SAAV-Saav Dados BD` |
+| **Nome do Sistema** | The Nehemizer — Portal Financeiro Saavedra |
+| **Código do Projeto** | `SAAV-The Nehemizer` |
 | **Versão Atual** | `1.3.0` |
 | **Área Negocial** | Departamento Financeiro / Compras / Logística |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
@@ -30,8 +30,8 @@ A operação comercial da **Saavedra** envolve a comercialização de suprimento
 
 Anteriormente, o processo de consolidação de relatórios de vendas, verificação de preços tabelados em propostas comerciais em PDF e segregação de vendas fora de contrato dependia de digitação e cruzamento manual em planilhas Excel, demandando horas de trabalho e gerando riscos de inconsistência financeira.
 
-### 2.2 Solução: Saav Dados BD
-O **Saav Dados BD** é uma ferramenta de automação inteligente que:
+### 2.2 Solução: The Nehemizer
+O **The Nehemizer** é uma ferramenta de automação inteligente que:
 1. **Ingere** relatórios de vendas brutos (Excel/CSV) e identifica automaticamente as colunas principais.
 2. **Extrai** com precisão os preços unitários e vigências contidas em propostas contratuais no formato PDF.
 3. **Aplica a Regra Suprema de Contingência**, direcionando itens sem contrato BD para a aba `NORMAL` e itens contratados para suas respectivas abas operacionais.

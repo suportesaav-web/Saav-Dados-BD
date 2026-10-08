@@ -1,0 +1,556 @@
+Date: Thu, 8 Oct 2026 10:48:15 +0000 (UTC)
+Message-ID: <456270607.39.1791456495704@0847b8c6dca7>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_38_101271660.1791456495704"
+
+------=_Part_38_101271660.1791456495704
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>Portal de Automa=C3=A7=C3=A3o de M=C3=A1rcio</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-se=
+rif);
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        page-break-after: avoid;
+    }
+
+    pre {
+        font: var(--ds-font-code, Monaco, "Courier New", monospace);
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>Portal de Automa=C3=A7=C3=A3o de M=C3=A1rcio</h1>
+    <div class=3D"Section1">
+        <h2 local-id=3D"9a4d19184244" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=
+=C3=A1rcio-1.Vis=C3=A3oGeral">1. Vis=C3=A3o Geral</h2>
+<p local-id=3D"2b305d91151f">Este sistema foi desenvolvido para eliminar o =
+processamento manual de relat=C3=B3rios de faturamento extra=C3=ADdos do ER=
+P Sankhya. A solu=C3=A7=C3=A3o automatiza a segrega=C3=A7=C3=A3o de dados p=
+or conv=C3=AAnio, higieniza informa=C3=A7=C3=B5es cr=C3=ADticas (como CNPJ)=
+ e gera um dashboard visual imediato para confer=C3=AAncia financeira.</p>
+<h2 local-id=3D"36b6eedafe32" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=C3=A1rci=
+o-2.ArquiteturadaSolu=C3=A7=C3=A3o">2. Arquitetura da Solu=C3=A7=C3=A3o</h2=
+>
+<p local-id=3D"4ea4e378ad60">A solu=C3=A7=C3=A3o utiliza o ecossistema Goog=
+le Workspace da Saavedra para garantir seguran=C3=A7a e custo zero:</p>
+<ul local-id=3D"3475fc72-0d3b-4a82-9f90-861ebf1f448b">
+<li local-id=3D"ca4716c9-2506-4ed7-b7f8-508e9aaf2b50">
+<p local-id=3D"d066604a0c49"><strong>Interface:</strong> Web App desenvolvi=
+do em HTML5/CSS3 com branding Saavedra.</p></li>
+<li local-id=3D"fffa07a1-8001-4c99-8348-a80bf65a8c28">
+<p local-id=3D"e379b21b0d85"><strong>Processamento Client-side:</strong> Bi=
+blioteca <code>SheetJS</code> para leitura r=C3=A1pida de bin=C3=A1rios Exc=
+el no navegador.</p></li>
+<li local-id=3D"69454832-50bd-48bf-beb6-96f6afaf7f08">
+<p local-id=3D"1a8481c7ce01"><strong>Motor de Regras:</strong> Google Apps =
+Script (V8 Engine) para manipula=C3=A7=C3=A3o de dados e l=C3=B3gica de neg=
+=C3=B3cio.</p></li>
+<li local-id=3D"140009ea-66bb-4f3f-a235-899530ab1ac3">
+<p local-id=3D"4524a6fee9cc"><strong>Armazenamento:</strong> Google Drive (=
+arquivos processados temporariamente).</p></li>
+</ul>
+<h2 local-id=3D"21c3e1c2bcd9" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=C3=A1rci=
+o-3.RegrasdeNeg=C3=B3cioImplementadas">3. Regras de Neg=C3=B3cio Implementa=
+das</h2>
+<p local-id=3D"930b2180fed8">O sistema categoriza automaticamente as linhas=
+ do relat=C3=B3rio com base nas seguintes prioridades:</p>
+<ol start=3D"1" local-id=3D"1c9bf8ad-3e38-406c-993d-29c3f11fccf6">
+<li local-id=3D"f0ad4cff-1bce-4955-85ed-cbc578325eee">
+<p local-id=3D"894d8015f7b2"><strong>UNIMED:</strong> Identificada via Raz=
+=C3=A3o Social ou campo Conv=C3=AAnio.</p></li>
+<li local-id=3D"e89b49e8-83cc-4604-8f62-ac444f800a9e">
+<p local-id=3D"3f106aa27c96"><strong>PUC:</strong> Uni=C3=A3o Brasileira de=
+ Educa=C3=A7=C3=A3o e Assist=C3=AAncia.</p></li>
+<li local-id=3D"e229a571-15ef-4f9b-bd55-0d4b701f8b51">
+<p local-id=3D"efdcc46859e8"><strong>HCAA:</strong> Complexo Hospitalar Ast=
+rogildo de Azevedo.</p></li>
+<li local-id=3D"87f3b402-8ba5-4711-aac6-749f4c1f4654">
+<p local-id=3D"c278be901f84"><strong>H.DIVINA:</strong> Sociedade Sulina Di=
+vina Provid=C3=AAncia.</p></li>
+<li local-id=3D"eaa5990d-7701-41f9-8574-9c4b6728d150">
+<p local-id=3D"546b44241e23"><strong>NORMAL:</strong> Fluxo residual para d=
+emais conv=C3=AAnios.</p></li>
+</ol>
+<h2 local-id=3D"15a35d6be5d4" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=C3=A1rci=
+o-4.FuncionalidadesdeAuditoriaeLimpeza">4. Funcionalidades de Auditoria e L=
+impeza</h2>
+<ul local-id=3D"53cd828a-de9e-4c28-8b71-540e9afa2bcf">
+<li local-id=3D"689de54f-46e9-44e9-8d86-d2b247073bf9">
+<p local-id=3D"a5dbe454d406"><strong>Normaliza=C3=A7=C3=A3o de Colunas:</st=
+rong> Remove acentos, pontos e espa=C3=A7os para evitar quebras no banco de=
+ dados.</p></li>
+<li local-id=3D"fcc96b3c-446f-4b7a-a38d-c95dd74aa3c6">
+<p local-id=3D"9a3fc479f35b"><strong>Corre=C3=A7=C3=A3o de CNPJ:</strong> F=
+or=C3=A7a o formato de texto puro para evitar que o Excel converta n=C3=BAm=
+eros longos em nota=C3=A7=C3=A3o cient=C3=ADfica (<code>E+13</code>).</p></=
+li>
+<li local-id=3D"9bf7fe97-de16-4e19-a629-daafcd2d15e0">
+<p local-id=3D"9e6215f8393c"><strong>Higieniza=C3=A7=C3=A3o de NaNs:</stron=
+g> Remove valores nulos, deixando as c=C3=A9lulas em branco para um visual =
+limpo.</p></li>
+<li local-id=3D"971b9d72-41c8-4f50-a78d-877350b442dd">
+<p local-id=3D"3650eef95c54"><strong>Formata=C3=A7=C3=A3o Cont=C3=A1bil:</s=
+trong> Aplica automaticamente <code>R$ #,##0.00</code> em colunas de Valor =
+e Totais.</p></li>
+</ul>
+<h2 local-id=3D"e46572cd1d9d" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=C3=A1rci=
+o-5.C=C3=B3digos-Fonte">5. C=C3=B3digos-Fonte</h2>
+<h3 local-id=3D"6adb26f348cf" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=C3=A1rci=
+o-A.MotordoSistema(C=C3=B3digo.gs)">A. Motor do Sistema (<code>C=C3=B3digo.=
+gs</code>)</h3>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">JavaScr=
+ipt</pre>
+</div>
+</div>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: js; gutter: false; theme: Confluence" data-theme=3D"Confluence">function =
+doGet() {
+  return HtmlService.createTemplateFromFile('Index')
+      .evaluate()
+      .setTitle('Portal Financeiro - Saavedra')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+const CORES =3D {
+  'UNIMED': '#C6EFCE', 'PUC': '#DDEBF7', 'H.DIVINA': '#F2DCDB', 'HCAA': '#F=
+FF2CC', 'NORMAL': '#E2E2E2'
+};
+
+function processarERetornarArquivo(jsonData, fileName) {
+  try {
+    const data =3D JSON.parse(jsonData);
+    const ss =3D SpreadsheetApp.create('PROCESSADO_' + fileName);
+    const spreadsheetId =3D ss.getId();
+   =20
+    const resSheet =3D ss.getSheets()[0];
+    resSheet.setName('RESUMO');
+   =20
+    const clientes =3D ['UNIMED', 'PUC', 'H.DIVINA', 'HCAA', 'NORMAL'];
+    let resumoRows =3D [['PEDIDO', 'Ref Prod', 'Descri=C3=A7=C3=A3o', 'Qtd =
+Com', 'VLR UNIT', 'VLR TOTAL']];
+    let coresResumo =3D [];
+
+    clientes.forEach(cli =3D&gt; {
+      let subset =3D data.filter(r =3D&gt; atribuirAba(r) =3D=3D=3D cli);
+      if (subset.length &gt; 0) {
+        let itens =3D {};
+        subset.forEach(r =3D&gt; {
+          let chave =3D r.REFPROD + '|' + r.DESCRICAO;
+          if (!itens[chave]) itens[chave] =3D { qtd: 0, total: 0 };
+          itens[chave].qtd +=3D parseFloat(r.QTDCOM || 0);
+          itens[chave].total +=3D parseFloat(r.VLRTOTAL || 0);
+        });
+       =20
+        let subtotal =3D 0;
+        Object.keys(itens).forEach(k =3D&gt; {
+          let [ref, desc] =3D k.split('|');
+          let vlrUnit =3D itens[k].total / itens[k].qtd;
+          resumoRows.push([cli, ref, desc, itens[k].qtd, vlrUnit, itens[k].=
+total]);
+          coresResumo.push(CORES[cli]);
+          subtotal +=3D itens[k].total;
+        });
+        resumoRows.push(['', '', 'TOTAL ACUMULADO ' + cli, '', '', subtotal=
+]);
+        coresResumo.push(CORES[cli]);
+      }
+    });
+   =20
+    resSheet.getRange(1, 1, resumoRows.length, 6).setValues(resumoRows);
+    coresResumo.forEach((cor, index) =3D&gt; {
+      resSheet.getRange(index + 2, 1, 1, 6).setBackground(cor);
+      if (resumoRows[index+1][2].includes('TOTAL ACUMULADO')) {
+        resSheet.getRange(index + 2, 1, 1, 6).setFontWeight('bold');
+      }
+    });
+    formatarMoeda(resSheet, resumoRows.length);
+
+    clientes.forEach(cli =3D&gt; {
+      let subset =3D data.filter(r =3D&gt; atribuirAba(r) =3D=3D=3D cli);
+      if (subset.length &gt; 0) {
+        let sheet =3D ss.insertSheet(cli);
+        let header =3D ['CONTRATO', 'CNPJ_PARCEIRO', 'UF', 'COD_CLI_USO', '=
+RAZ=C3=83O SOCIAL', 'CNPJ_PARC_USO', 'CONVENIO', 'Ref Prod', 'Descri=C3=A7=
+=C3=A3o', 'Qtd'];
+       =20
+        let rows =3D subset.map(r =3D&gt; [
+          r.CONTRATOCLIENTE,=20
+          "'" + String(r.CNPJPARCEIRO || "").replace(/\D/g, ""),=20
+          r.UF, r.CODCLIUSO, r.RAZAOSOCIAL,=20
+          "'" + String(r.CNPJPARCUSO || "").replace(/\D/g, ""),=20
+          r.CONVENIO, r.REFPROD, r.DESCRICAO, r.QTDCOM
+        ]);
+       =20
+        sheet.getRange(1, 1, 1, 10).setValues([header]).setBackground('#333=
+333').setFontColor('white').setFontWeight('bold');
+        sheet.getRange(2, 1, rows.length, 10).setValues(rows).setBackground=
+(CORES[cli]);
+       =20
+        // Resumo interno da aba
+        let itensCli =3D {};
+        subset.forEach(r =3D&gt; {
+           let chave =3D r.REFPROD + '|' + r.DESCRICAO;
+           if(!itensCli[chave]) itensCli[chave] =3D {qtd: 0, total: 0};
+           itensCli[chave].qtd +=3D parseFloat(r.QTDCOM || 0);
+           itensCli[chave].total +=3D parseFloat(r.VLRTOTAL || 0);
+        });
+
+        let startR =3D rows.length + 4;
+        sheet.getRange(startR, 1, 1, 5).setValues([['Ref Prod', 'Descri=C3=
+=A7=C3=A3o', 'Qtd Com', 'VLR UNIT', 'VLR TOTAL']]).setFontWeight('bold');
+        let resumoCliRows =3D Object.keys(itensCli).map(k =3D&gt; {
+           let [ref, desc] =3D k.split('|');
+           return [ref, desc, itensCli[k].qtd, (itensCli[k].total / itensCl=
+i[k].qtd), itensCli[k].total];
+        });
+        sheet.getRange(startR + 1, 1, resumoCliRows.length, 5).setValues(re=
+sumoCliRows);
+        sheet.getRange(startR + resumoCliRows.length + 1, 2, 1, 4).setValue=
+s([['TOTAL GERAL', '', '', subset.reduce((a,b) =3D&gt; a + parseFloat(b.VLR=
+TOTAL || 0), 0)]]).setFontWeight('bold');
+        sheet.getRange(startR + 1, 4, resumoCliRows.length + 1, 2).setNumbe=
+rFormat('R$ #,##0.00');
+      }
+    });
+
+    return { success: true, fileUrl: "https://docs.google.com/spreadsheets/=
+d/" + spreadsheetId + "/export?format=3Dxlsx" };
+  } catch (e) {
+    return { success: false, message: e.toString() };
+  }
+}
+
+function atribuirAba(r) {
+  let razao =3D String(r.RAZAOSOCIAL || '').toUpperCase();
+  let conv =3D String(r.CONVENIO || '').toUpperCase();
+  if (razao.includes('UNIMED') || conv.includes('UNIMED')) return 'UNIMED';
+  if (razao.includes('UNIAO BRASILEIRA DE EDUCACAO')) return 'PUC';
+  if (razao.includes('ASTROGILDO DE AZEVEDO')) return 'HCAA';
+  if (razao.includes('DIVINA PROVIDENCIA')) return 'H.DIVINA';
+  return 'NORMAL';
+}
+
+function formatarMoeda(sheet, lastRow) {
+  sheet.getRange(2, 5, lastRow, 2).setNumberFormat('R$ #,##0.00');
+  sheet.getRange("A1:F1").setBackground('#F37021').setFontColor('white').se=
+tFontWeight('bold');
+}
+</pre>
+</div>
+</div>
+<h3 local-id=3D"cd745b2b9e44" id=3D"PortaldeAutoma=C3=A7=C3=A3odeM=C3=A1rci=
+o-B.InterfaceFront-end(Index.html)">B. Interface Front-end (<code>Index.htm=
+l</code>)</h3>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">HTML</p=
+re>
+</div>
+</div>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: html; gutter: false; theme: Confluence" data-theme=3D"Confluence">&lt;!DO=
+CTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;base target=3D"_top"&gt;
+  &lt;script src=3D"https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.f=
+ull.min.js"&gt;&lt;/script&gt;
+  &lt;style&gt;
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; displa=
+y: flex; justify-content: center; padding-top: 30px; }
+    .card { background: white; padding: 30px; border-radius: 15px; border-t=
+op: 8px solid #F37021; width: 500px; box-shadow: 0 4px 10px rgba(0,0,0,0.1)=
+; text-align: center; }
+    .btn { background: #F37021; color: white; border: none; padding: 15px; =
+width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin=
+-top: 10px; font-size: 16px; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    #log-container { background: #1a1a1a; color: #00ff00; padding: 15px; bo=
+rder-radius: 5px; margin-top: 20px; font-family: 'Courier New', monospace; =
+font-size: 12px; height: 150px; overflow-y: auto; text-align: left; }
+    input[type=3D"file"] { margin: 20px 0; border: 1px solid #ddd; padding:=
+ 10px; width: 90%; border-radius: 5px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=3D"card"&gt;
+    &lt;img src=3D"https://www.saavedra.com.br/wp-content/uploads/2021/05/l=
+ogo-saavedra.png" width=3D"150"&gt;
+    &lt;h2&gt;Automa=C3=A7=C3=A3o Saavedra N3&lt;/h2&gt;
+    &lt;p&gt;Processador de Relat=C3=B3rios Sankhya&lt;/p&gt;
+    &lt;input type=3D"file" id=3D"fileInput" accept=3D".xls,.xlsx"&gt;
+    &lt;button id=3D"mainBtn" class=3D"btn"&gt;EXECUTAR PROCESSAMENTO&lt;/b=
+utton&gt;
+    &lt;div id=3D"log-container"&gt;&gt; Aguardando arquivo...&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    const btn =3D document.getElementById('mainBtn');
+    const log =3D document.getElementById('log-container');
+    function addLog(msg) { log.innerHTML +=3D `&lt;br&gt;&gt; ${msg}`; log.=
+scrollTop =3D log.scrollHeight; }
+
+    btn.addEventListener('click', function() {
+      const file =3D document.getElementById('fileInput').files[0];
+      if (!file) return alert("Selecione o arquivo!");
+      btn.disabled =3D true;
+      addLog("Lendo arquivo: " + file.name);
+      const reader =3D new FileReader();
+      reader.onload =3D function(e) {
+        try {
+          const data =3D new Uint8Array(e.target.result);
+          const wb =3D XLSX.read(data, {type: 'array'});
+          const rawData =3D XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetName=
+s[0]], {range: 2});
+          addLog(`Sucesso: ${rawData.length} linhas lidas.`);
+          const cleanedData =3D rawData.map(row =3D&gt; {
+            let newRow =3D {};
+            Object.keys(row).forEach(k =3D&gt; {
+              let cleanKey =3D k.normalize("NFD").replace(/[\u0300-\u036f]/=
+g, "").toUpperCase().replace(/[.\s_-]/g, "");
+              newRow[cleanKey] =3D row[k] =3D=3D null ? "" : row[k];
+            });
+            return newRow;
+          });
+          addLog("Enviando para o Google Cloud...");
+          google.script.run
+            .withSuccessHandler(res =3D&gt; {
+              if(res.success) {
+                addLog("CONCLU=C3=8DDO! Baixando...");
+                window.location.href =3D res.fileUrl;
+              } else { addLog("ERRO: " + res.message); }
+              btn.disabled =3D false;
+            })
+            .processarERetornarArquivo(JSON.stringify(cleanedData), file.na=
+me);
+        } catch (err) { addLog("ERRO: " + err.message); btn.disabled =3D fa=
+lse; }
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+</div>
+<p local-id=3D"52a6483ebd97"></p>
+    </div>
+</body>
+</html>
+------=_Part_38_101271660.1791456495704--

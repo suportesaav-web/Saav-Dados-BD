@@ -1,14 +1,14 @@
-# ⚖️ Regras de Negócio e Mapeamentos — Saav Dados BD
+# ⚖️ Regras de Negócio e Mapeamentos — The Nehemizer
 
 > **Documento Funcional e de Governança de Negócio**  
-> **Sistema:** Saav Dados BD (Portal Financeiro Saavedra)  
+> **Sistema:** The Nehemizer (Portal Financeiro Saavedra)  
 > **Aplicação:** Conciliação, auditoria e equalização de contratos de distribuição hospitalar.
 
 ---
 
 ## 1. 🎯 Propósito Operacional
 
-O **Saav Dados BD** foi desenvolvido para garantir a conformidade e a integridade financeira no faturamento de produtos hospitalares (especialmente da linha Becton Dickinson - BD) distribuídos pela **Saavedra**.
+O **The Nehemizer** foi desenvolvido para garantir a conformidade e a integridade financeira no faturamento de produtos hospitalares (especialmente da linha Becton Dickinson - BD) distribuídos pela **Saavedra**.
 
 O sistema opera na intersecção de três fontes de dados:
 1. **Relatório Bruto de Vendas:** Registros diários/mensais extraídos do ERP da Saavedra contendo pedidos faturados.
@@ -19,7 +19,7 @@ O sistema opera na intersecção de três fontes de dados:
 
 ## 2. ⚖️ A Regra Suprema de Contingência
 
-A **Regra Suprema de Contingência** é a espinha dorsal lógica do Saav Dados BD. Ela estabelece um critério determinístico para classificar se uma venda deve usufruir da precificação de contrato ou se deve ser segregada para tratamento padrão.
+A **Regra Suprema de Contingência** é a espinha dorsal lógica do The Nehemizer. Ela estabelece um critério determinístico para classificar se uma venda deve usufruir da precificação de contrato ou se deve ser segregada para tratamento padrão.
 
 ```mermaid
 flowchart TD

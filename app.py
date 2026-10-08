@@ -83,9 +83,12 @@ else:
 
     if st.session_state['mapeamento_parceiros'] is None:
         parceiros_df = df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'GRUPO_CLIENTE']].drop_duplicates(subset=['CODPARC', 'CNPJPARCEIRO'])
-        # Mapeia como CLIENTE se tiver Grupo Mapeado (ex: UNIMED), caso contrário NORMAL
-        parceiros_df['DESTINO'] = parceiros_df['GRUPO_CLIENTE'].apply(lambda x: "CLIENTE" if x != "NORMAL" else "NORMAL")
+        # Mapeia como a sigla do Grupo se existir, senão NORMAL
+        parceiros_df['DESTINO'] = parceiros_df['GRUPO_CLIENTE'].apply(lambda x: x if x != "NORMAL" else "NORMAL")
         st.session_state['mapeamento_parceiros'] = parceiros_df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'DESTINO']]
+        
+    opcoes_destino = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]
+
         
     parceiros_editados = st.data_editor(
         st.session_state['mapeamento_parceiros'],
@@ -93,7 +96,7 @@ else:
             "DESTINO": st.column_config.SelectboxColumn(
                 "Aba Destino",
                 help="Selecione NORMAL para contingência ou CLIENTE para gerar uma aba específica.",
-                options=["NORMAL", "CLIENTE"],
+                options=opcoes_destino,
                 required=True,
             )
         },
@@ -110,9 +113,15 @@ else:
     
     def aplicar_mapeamento(row):
         destino_selecionado = mapeamento_dict.get((row['CODPARC'], row['CNPJPARCEIRO']), "NORMAL")
-        # Se escolheu CLIENTE, a aba ganha o nome do Grupo ou Razão Social
-        nome_aba = row['GRUPO_CLIENTE'] if row['GRUPO_CLIENTE'] != 'NORMAL' else row['RAZAOSOCIAL']
-        return "NORMAL" if destino_selecionado == "NORMAL" else nome_aba
+        # Se for NORMAL, vai pra contingência
+        if destino_selecionado == "NORMAL":
+            return "NORMAL"
+        # Se for CLIENTE (Usar Razão Social), pega a Razão Social da linha
+        elif destino_selecionado == "CLIENTE (Usar Razão Social)":
+            return row['RAZAOSOCIAL']
+        # Se for uma Sigla pré-mapeada (ex: UNIMED), usa ela própria
+        else:
+            return destino_selecionado
         
     df['ABA_DESTINO'] = df.apply(aplicar_mapeamento, axis=1)
     df['SIGLA_RESUMO'] = df['ABA_DESTINO']

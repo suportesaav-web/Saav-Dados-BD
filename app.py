@@ -143,26 +143,57 @@ else:
         'SIGLA_RESUMO': 'first'
     }
     
-    resumo_df = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO']).agg(agg_dict).reset_index()
-    resumo_df['VLR UNIT VENDA'] = np.where(resumo_df['QTDCOM'] > 0, resumo_df['VLRTOTAL'] / resumo_df['QTDCOM'], 0)
+    if 'resumo_df_editado' not in st.session_state or st.session_state.get('last_df_hash') != hash(df.to_string()):
+        resumo_df = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO']).agg(agg_dict).reset_index()
+        resumo_df['VLR UNIT VENDA'] = np.where(resumo_df['QTDCOM'] > 0, resumo_df['VLRTOTAL'] / resumo_df['QTDCOM'], 0)
+        st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL']].copy()
+        st.session_state['last_df_hash'] = hash(df.to_string())
     
-    cols_ui = ['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL']
-    resumo_df_ui = resumo_df[cols_ui].copy()
-    
-    st.dataframe(
-        resumo_df_ui, 
+    opcoes_destino_resumo = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]
+
+    resumo_df_ui = st.data_editor(
+        st.session_state['resumo_df_editado'], 
         use_container_width=True, 
         hide_index=True,
         column_config={
-            "SIGLA_RESUMO": "Aba Destino",
+            "SIGLA_RESUMO": st.column_config.SelectboxColumn("Aba Destino", options=opcoes_destino_resumo, required=True),
             "REFPROD": "Catalogo",
             "QTDCOM": "Quantidade",
-            "VLR UNIT VENDA": st.column_config.NumberColumn(format="R$ %.2f"),
-            "VLRTOTAL": st.column_config.NumberColumn(format="R$ %.2f"),
-        }
+            "VLR UNIT VENDA": st.column_config.NumberColumn("VLR UNIT VENDA", format="R$ %.2f"),
+            "VLRTOTAL": st.column_config.NumberColumn("VLR TOTAL", format="R$ %.2f", disabled=True),
+        },
+        disabled=["REFPROD", "DESCRICAO", "QTDCOM", "VLRTOTAL"],
+        key="editor_resumo"
     )
     
-    # Guarda as alteracoes no estado (mesmo sem o editor de preco de compra)
+    # Calcular automaticamente se o VLR UNIT VENDA for alterado e atualizar SIGLA_RESUMO
+    if not resumo_df_ui.equals(st.session_state['resumo_df_editado']):
+        resumo_df_ui['VLRTOTAL'] = resumo_df_ui['QTDCOM'] * resumo_df_ui['VLR UNIT VENDA']
+        st.session_state['resumo_df_editado'] = resumo_df_ui.copy()
+        st.rerun()
+
+    # Aplica as alterações feitas na prévia de volta no DataFrame principal
+    # Cruzando por REFPROD e DESCRICAO
+    mapeamento_previa = resumo_df_ui.set_index(['REFPROD', 'DESCRICAO'])[['SIGLA_RESUMO', 'VLR UNIT VENDA']].to_dict('index')
+    
+    def aplicar_edicoes_previa(row):
+        chave = (row['REFPROD'], row['DESCRICAO'])
+        if chave in mapeamento_previa:
+            nova_aba = mapeamento_previa[chave]['SIGLA_RESUMO']
+            novo_vlr_unit = mapeamento_previa[chave]['VLR UNIT VENDA']
+            
+            # Se for CLIENTE (Usar Razão Social), usamos a RAZAOSOCIAL original da linha
+            if nova_aba == "CLIENTE (Usar Razão Social)":
+                nova_aba = row['RAZAOSOCIAL']
+                
+            row['ABA_DESTINO'] = nova_aba
+            row['SIGLA_RESUMO'] = nova_aba
+            row['VLRTOTAL'] = row['QTDCOM'] * novo_vlr_unit
+        return row
+        
+    df = df.apply(aplicar_edicoes_previa, axis=1)
+
+    # Guarda as alteracoes no estado
     st.session_state['df_processado'] = df
     st.markdown("<br>", unsafe_allow_html=True)
     

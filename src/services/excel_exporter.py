@@ -36,10 +36,12 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
                     row['DESCRICAO'], 
                     row['QTDCOM'], 
                     vlr_unit_venda, 
-                    row['VLRTOTAL']
+                    f'=D{len(linhas_resumo)+2}*E{len(linhas_resumo)+2}' # Excel formula
                 ])
                 subtotal_venda += row['VLRTOTAL']
             
+            # Using formulas for subtotals is tricky since we'd need to know the range, so we just put the python sum, or a SUM formula.
+            # Let's stick to the python calculated sum for subtotals, or SUM(range).
             linhas_resumo.append(['', f'TOTAL ACUMULADO {destino}', '', '', '', subtotal_venda])
             total_geral_venda += subtotal_venda
         
@@ -62,9 +64,14 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
         for row_num, row_data in enumerate(linhas_resumo):
             txt = str(row_data[1])
             if 'TOTAL GERAL CONSOLIDADO' in txt:
-                ws_resumo.set_row(row_num + 1, None, formato_total_geral)
+                ws_resumo.write_row(row_num + 1, 0, row_data, formato_total_geral)
             elif 'TOTAL ACUMULADO' in txt:
-                ws_resumo.set_row(row_num + 1, None, formato_subtotal)
+                ws_resumo.write_row(row_num + 1, 0, row_data, formato_subtotal)
+            else:
+                # Write row data up to column E
+                ws_resumo.write_row(row_num + 1, 0, row_data[:5])
+                # Write formula for column F
+                ws_resumo.write_formula(row_num + 1, 5, row_data[5], formato_moeda)
         
         # 2. ABAS INDIVIDUAIS
         abas_para_criar = df['ABA_DESTINO'].dropna().unique().tolist()
@@ -109,7 +116,11 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
             
             for idx, rcli in resumo_cli.iterrows():
                 v_unit = rcli['VLRTOTAL'] / rcli['QTDCOM'] if rcli['QTDCOM'] > 0 else 0
-                ws_aba.write_row(start_r + idx, 0, [rcli['REFPROD'], rcli['DESCRICAO'], rcli['QTDCOM'], v_unit, rcli['VLRTOTAL']])
+                row_idx = start_r + idx
+                # Write data columns
+                ws_aba.write_row(row_idx, 0, [rcli['REFPROD'], rcli['DESCRICAO'], rcli['QTDCOM'], v_unit])
+                # Write formula for total
+                ws_aba.write_formula(row_idx, 4, f'=C{row_idx+1}*D{row_idx+1}')
             
             total_geral = resumo_cli['VLRTOTAL'].sum()
             ws_aba.write_row(start_r + len(resumo_cli), 0, ['TOTAL GERAL', '', '', '', total_geral], formato_subtotal)

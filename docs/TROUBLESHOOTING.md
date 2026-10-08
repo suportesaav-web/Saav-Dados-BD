@@ -39,8 +39,8 @@ Este documento compila os erros mais comuns (e suas soluções) que podem ocorre
 
 ## 8. Erro: Divisão por Zero (`VLR UNIT VENDA` = 0)
 **Descrição:** O VLR UNIT VENDA aparece zerado ou com `NaN`/`Inf`.
-**Causa:** A quantidade vendida (`QTDCOM`) está igual a 0 ou vazio na origem, mas há um `VLRTOTAL` na nota (brindes ou amostras atípicas).
-**Solução:** O script já utiliza `np.where(QTDCOM > 0, VLRTOTAL / QTDCOM, 0)` para mitigar isto. Cheque se os tipos de dados não foram lidos como `string` em vez de números. 
+**Causa:** A coluna "Vlr. Unit." original da planilha não foi identificada e o sistema tentou calcular usando `VLRTOTAL / QTDCOM` com uma quantidade zerada.
+**Solução:** O script atual busca ler a coluna de valor unitário primária (`VLRUNIT`). Caso ela não exista, ele faz a matemática. Verifique se os tipos de dados não foram lidos como `string` em vez de números na planilha de origem. 
 
 ## 9. Erro: Abas de Clientes sumiram (Tudo vai pro NORMAL)
 **Descrição:** Você faz o upload do arquivo e 100% dos dados caem no NORMAL, não isolando a UNIMED ou outros hospitais.

@@ -15,10 +15,12 @@ Assim que você envia o arquivo, a tela abrirá o mapeamento de clientes.
 
 ## 3. Prévia do Relatório e Edição de Preços de Compra
 Descendo a página, você verá uma tabela visualizando o resumo do faturamento.
-- **Tudo em um só lugar:** Aqui os produtos já estão agrupados! 
-- **Edição de Abas:** Você ainda pode remanejar a aba do item diretamente pelo menu suspenso.
+- **Tudo em um só lugar:** Aqui os itens são agrupados por Hospital e Produto. 
+- **Separação Inteligente por Preço:** Se um mesmo produto for vendido para o mesmo hospital mas com Valores Unitários (VLR UNIT) diferentes (por causa de lotes ou condições distintas), o sistema exibirá linhas separadas para cada preço, preservando o valor exato!
+- **Edição de Abas:** Você ainda pode remanejar a aba destino do item diretamente pelo menu suspenso `ABA DESTINO`.
+- **Coluna CONTRATO:** Além do destino, você pode alterar o campo `CONTRATO`. Ele serve para identificar qual foi a regra de contrato aplicada na venda daquele item, independente da aba em que ele vai ficar.
 - **VLR COMPRA (Custo):** Todos os itens vêm zerados. Você pode dar dois cliques na célula de `VLR COMPRA` e digitar o custo real. O campo `TOT VLR COMPRA` irá se auto-multiplicar instantaneamente para mostrar o impacto na quantidade.
-- **VLR UNIT VENDA:** Este campo vem fixado do seu faturamento bruto (apenas leitura).
+- **VLR UNIT VENDA:** Este campo vem fixado do seu faturamento bruto (apenas leitura). Ele exibe o valor unitário exato da nota.
 
 ## 4. Geração do Relatório Final
 Com tudo revisado e os valores de compra incluídos:

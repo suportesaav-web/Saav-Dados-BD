@@ -83,8 +83,8 @@ else:
 
     if st.session_state['mapeamento_parceiros'] is None:
         parceiros_df = df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'GRUPO_CLIENTE']].drop_duplicates(subset=['CODPARC', 'CNPJPARCEIRO'])
-        # Mapeia como a sigla do Grupo se existir, senão NORMAL
-        parceiros_df['DESTINO'] = parceiros_df['GRUPO_CLIENTE'].apply(lambda x: x if x != "NORMAL" else "NORMAL")
+        # Mapeia como a sigla do Grupo se existir na lista de pre-mapeados, senão NORMAL
+        parceiros_df['DESTINO'] = parceiros_df['GRUPO_CLIENTE'].apply(lambda x: x if (x != "NORMAL" and x in CONTRATOS_MAPPING) else "NORMAL")
         st.session_state['mapeamento_parceiros'] = parceiros_df[['CODPARC', 'CNPJPARCEIRO', 'RAZAOSOCIAL', 'DESTINO']]
         
     opcoes_destino = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]

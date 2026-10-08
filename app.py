@@ -146,7 +146,8 @@ else:
     if 'resumo_df_editado' not in st.session_state or st.session_state.get('last_df_hash') != hash(df.to_string()):
         resumo_df = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO']).agg(agg_dict).reset_index()
         resumo_df['VLR UNIT VENDA'] = np.where(resumo_df['QTDCOM'] > 0, resumo_df['VLRTOTAL'] / resumo_df['QTDCOM'], 0)
-        st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL']].copy()
+        resumo_df['ABA_DESTINO_ORIGINAL'] = resumo_df['ABA_DESTINO'] # Key for tracking edits
+        st.session_state['resumo_df_editado'] = resumo_df[['SIGLA_RESUMO', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL', 'ABA_DESTINO_ORIGINAL']].copy()
         st.session_state['last_df_hash'] = hash(df.to_string())
     
     opcoes_destino_resumo = ["NORMAL", "CLIENTE (Usar Razão Social)"] + [k for k in CONTRATOS_MAPPING.keys() if k != "NORMAL" and k]
@@ -161,6 +162,7 @@ else:
             "QTDCOM": "Quantidade",
             "VLR UNIT VENDA": st.column_config.NumberColumn("VLR UNIT VENDA", format="R$ %.2f"),
             "VLRTOTAL": st.column_config.NumberColumn("VLR TOTAL", format="R$ %.2f", disabled=True),
+            "ABA_DESTINO_ORIGINAL": None # Hide original tracker column
         },
         disabled=["REFPROD", "DESCRICAO", "QTDCOM", "VLRTOTAL"],
         key="editor_resumo"
@@ -173,11 +175,11 @@ else:
         st.rerun()
 
     # Aplica as alterações feitas na prévia de volta no DataFrame principal
-    # Cruzando por REFPROD e DESCRICAO
-    mapeamento_previa = resumo_df_ui.set_index(['REFPROD', 'DESCRICAO'])[['SIGLA_RESUMO', 'VLR UNIT VENDA']].to_dict('index')
+    # Cruzando por ABA_DESTINO (original), REFPROD e DESCRICAO
+    mapeamento_previa = resumo_df_ui.set_index(['ABA_DESTINO_ORIGINAL', 'REFPROD', 'DESCRICAO'])[['SIGLA_RESUMO', 'VLR UNIT VENDA']].to_dict('index')
     
     def aplicar_edicoes_previa(row):
-        chave = (row['REFPROD'], row['DESCRICAO'])
+        chave = (row['ABA_DESTINO'], row['REFPROD'], row['DESCRICAO'])
         if chave in mapeamento_previa:
             nova_aba = mapeamento_previa[chave]['SIGLA_RESUMO']
             novo_vlr_unit = mapeamento_previa[chave]['VLR UNIT VENDA']

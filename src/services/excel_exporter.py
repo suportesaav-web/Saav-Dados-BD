@@ -18,6 +18,7 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
         # 1. ABA RESUMO
         df_resumo_export = df.groupby(['ABA_DESTINO', 'REFPROD', 'DESCRICAO']).agg({
             'SIGLA_RESUMO': 'first',
+            'CONTRATO_FINAL': 'first',
             'QTDCOM': 'sum',
             'VLRTOTAL': 'sum',
             'VLR COMPRA': 'first',
@@ -37,35 +38,37 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
                 vlr_compra = row.get('VLR COMPRA', 0.0)
                 linhas_resumo.append([
                     row['SIGLA_RESUMO'], 
+                    row.get('CONTRATO_FINAL', row['SIGLA_RESUMO']),
                     row['REFPROD'], 
                     row['DESCRICAO'], 
                     row['QTDCOM'], 
                     vlr_unit_venda, 
-                    f'=D{len(linhas_resumo)+2}*E{len(linhas_resumo)+2}', # Excel formula VLR TOTAL
+                    f'=E{len(linhas_resumo)+2}*F{len(linhas_resumo)+2}', # Excel formula VLR TOTAL
                     vlr_compra,
-                    f'=D{len(linhas_resumo)+2}*G{len(linhas_resumo)+2}'  # Excel formula TOT VLR COMPRA
+                    f'=E{len(linhas_resumo)+2}*H{len(linhas_resumo)+2}'  # Excel formula TOT VLR COMPRA
                 ])
                 subtotal_venda += row['VLRTOTAL']
                 subtotal_compra += row.get('TOT VLR COMPRA', 0.0)
             
             # Using formulas for subtotals is tricky since we'd need to know the range, so we just put the python sum, or a SUM formula.
             # Let's stick to the python calculated sum for subtotals, or SUM(range).
-            linhas_resumo.append(['', f'TOTAL ACUMULADO {destino}', '', '', '', subtotal_venda, '', subtotal_compra])
+            linhas_resumo.append(['', f'TOTAL ACUMULADO {destino}', '', '', '', '', subtotal_venda, '', subtotal_compra])
             total_geral_venda += subtotal_venda
             total_geral_compra += subtotal_compra
         
-        linhas_resumo.append(['', 'TOTAL GERAL CONSOLIDADO', '', '', '', total_geral_venda, '', total_geral_compra])
+        linhas_resumo.append(['', 'TOTAL GERAL CONSOLIDADO', '', '', '', '', total_geral_venda, '', total_geral_compra])
             
         df_excel_resumo = pd.DataFrame(linhas_resumo, columns=[
-            'ABA DESTINO', 'CATALOGO', 'DESCRICAO', 'QUANTIDADE', 'VLR UNIT VENDA', 'VLR TOTAL', 'VLR COMPRA', 'TOT VLR COMPRA'
+            'ABA DESTINO', 'CONTRATO', 'CATALOGO', 'DESCRICAO', 'QUANTIDADE', 'VLR UNIT VENDA', 'VLR TOTAL', 'VLR COMPRA', 'TOT VLR COMPRA'
         ])
         
         df_excel_resumo.to_excel(writer, sheet_name='RESUMO', index=False)
         ws_resumo = writer.sheets['RESUMO']
         ws_resumo.set_column('A:B', 16)
-        ws_resumo.set_column('C:C', 36)
-        ws_resumo.set_column('D:D', 12)
-        ws_resumo.set_column('E:H', 18, formato_moeda)
+        ws_resumo.set_column('C:C', 16)
+        ws_resumo.set_column('D:D', 36)
+        ws_resumo.set_column('E:E', 12)
+        ws_resumo.set_column('F:I', 18, formato_moeda)
         
         for col_num, value in enumerate(df_excel_resumo.columns.values):
             ws_resumo.write(0, col_num, value, formato_cabecalho)
@@ -77,14 +80,14 @@ def gerar_planilha_consolidada(df: pd.DataFrame) -> bytes:
             elif 'TOTAL ACUMULADO' in txt:
                 ws_resumo.write_row(row_num + 1, 0, row_data, formato_subtotal)
             else:
-                # Write row data up to column E and column G
-                ws_resumo.write_row(row_num + 1, 0, row_data[:5])
-                # Write formula for column F (VLR TOTAL)
-                ws_resumo.write_formula(row_num + 1, 5, row_data[5], formato_moeda)
-                # Write VLR COMPRA
-                ws_resumo.write(row_num + 1, 6, row_data[6], formato_moeda)
-                # Write formula for column H (TOT VLR COMPRA)
-                ws_resumo.write_formula(row_num + 1, 7, row_data[7], formato_moeda)
+                # Write row data up to column F and column H
+                ws_resumo.write_row(row_num + 1, 0, row_data[:6])
+                # Write formula for column G (VLR TOTAL)
+                ws_resumo.write_formula(row_num + 1, 6, row_data[6], formato_moeda)
+                # Write VLR COMPRA (column H)
+                ws_resumo.write(row_num + 1, 7, row_data[7], formato_moeda)
+                # Write formula for column I (TOT VLR COMPRA)
+                ws_resumo.write_formula(row_num + 1, 8, row_data[8], formato_moeda)
         
         # 2. ABAS INDIVIDUAIS
         abas_para_criar = df['ABA_DESTINO'].dropna().unique().tolist()
